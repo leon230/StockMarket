@@ -1,0 +1,125 @@
+h1{
+	color:red;
+}
+body {
+    background-color: #ffffff;
+}
+a {
+	margin: 0px;
+	padding: 0px;
+
+}
+hr {
+    display: block;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* Main  table CSS */
+.trActionsDet{
+	visibility: collapse;
+
+}
+.trActionsDetVis{
+	visibility: Visible;
+
+}
+
+.mainTable  th, td {
+   border: 1px solid black;
+   padding-left: 3px;
+   padding-right: 3px;
+   text-align: center;
+   overflow: hidden;
+   border: 1px solid rgba(242, 242, 242, .8);
+}
+.mainTable {
+    border-collapse: collapse;
+	display: block;
+	overflow-x: auto;
+	width: auto;
+	max-height: 700px;
+
+}
+.mainTable .ood{
+	background-color: #ff0000;
+}
+.mainTable .phigh{
+	background-color: #ff9999;
+}
+.mainTable .new{
+	background-color: #85e085;
+}
+.mainTable .thstd{
+	background-color: #ffffff;
+}
+/* .mainTable tr:nth-child(even) {background-color: #f2f2f2;} */
+.mainTable tr:hover {background-color: #b3d9ff}
+.mainTable th {
+    background-color: #ffffff;
+    color: black;
+    font-weight: bold;
+	min-width: 150px;
+}
+.shortCol{
+	max-width: 100px;
+}
+.longCol{
+	min-width: 300px;
+}
+/* Long text in row */
+.longText {
+display: fixed;
+max-height: auto;
+max-width: 500px;
+overflow: hidden;
+}
+
+.error {
+	color: #ff0000;
+}
+
+.errorblock{
+	color: #000;
+	background-color: #ffEEEE;
+	border: 3px solid #ff0000;
+	padding:8px;
+	margin:16px;
+}
+div.wrapper {
+  text-align: left;
+  width: 100%;
+  overflow: auto;
+}
+.headerbar{
+    height: 50px;
+    background-color:#222;
+    text-color: #ffffff;
+}
+.headerbar brand:hover{color:#fff;background-color:transparent}
+.chartsPie{
+	display: inline;
+}
+.chart_td{
+	border: 2px solid rgba(242, 242, 242, .5);
+}
+.navbar-brand{
+	color: #fff;
+	background-color: transparent;
+}
+.navbar-brand:hover{color:#fff;background-color:transparent}
+h1{
+	color: #000000;
+}
+.filterDiv{
+	border: 1px solid rgba(242, 242, 242, .9);
+	height: 20px;
+	min-width: 300px;
+	display: inline-table;
+
+}
+.filterDiv p{
+	display: block;
+
+}

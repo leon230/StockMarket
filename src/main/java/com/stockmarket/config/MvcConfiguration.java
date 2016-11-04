@@ -1,6 +1,9 @@
 package com.stockmarket.config;
 
 import javax.sql.DataSource;
+
+import com.stockmarket.dao.UserDAO;
+import com.stockmarket.dao.UserDAOImpl;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -50,6 +53,10 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter{
         dataSource.setPassword("");
 
         return dataSource;
+    }
+    @Bean
+    public UserDAO getUserDAO() {
+        return new UserDAOImpl(getDataSource());
     }
 
 }
