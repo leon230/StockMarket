@@ -55,10 +55,9 @@ public class SecurityController {
     @RequestMapping(value = "/newUser", method = RequestMethod.GET)
     public ModelAndView newUser(ModelAndView model) {
         User newUser = new User();
-        SimpleDateFormat printFormat = new SimpleDateFormat("yyyyMMdd_kkmmss");
-        Date date = new Date();
-
-//        newUser.setNumber(System.getProperty("user.name") + "_" + printFormat.format(date));
+        Wallet wallet = new Wallet();
+//        SimpleDateFormat printFormat = new SimpleDateFormat("yyyyMMdd_kkmmss");
+//        Date date = new Date();
         model.addObject("UserForm", newUser);
         model.setViewName("UserForm");
 
