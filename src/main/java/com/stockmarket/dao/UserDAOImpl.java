@@ -18,6 +18,35 @@ public class UserDAOImpl implements UserDAO{
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    /**
+     * UserId is hidden in the template
+     * @param user
+     */
+    @Override
+    public void saveOrUpdate(User user) {
+        if (user.getUserId() > 0) {
+            // update
+            String sql = "UPDATE tickets SET TICKET_NO=?, TICKET_TITLE=?, TICKET_OWNER=?, "
+                    + "CLUSTER=?, OPEN_DATE=?, CLOSE_DATE=?, DESCRIPTION=?" +
+                    ",REPORTED_BY=?, PRIORITY=?, STATUS=?, ACC_OWNER=?, REQUEST_DATE=?,DUE_DATE =? WHERE ID=?";
+            jdbcTemplate.update(sql, user.getUserName());
+        } else {
+            // insert user table
+            String userSql = "INSERT INTO users (USERNAME,PASSWORD,WALLET_ID)"
+                    + " VALUES (?, ?, ?)";
+            jdbcTemplate.update(userSql, user.getUserName(),user.getUserPass(), user.getUserWalletId());
+            // insert userrole table
+            String roleSql = "INSERT INTO user_roles (USERNAME,ROLE)"
+                    + " VALUES (?, ?)";
+            jdbcTemplate.update(roleSql, user.getUserName(),user.getUserRole());
+        }
+    }
+
+    @Override
+    public void delete(int ticketId) {
+//        String sql = "DELETE FROM tickets WHERE ID=?";
+//        jdbcTemplate.update(sql, ticketId);
+    }
     @Override
     public List<User> listuser(String userName) {
         String sql = "SELECT * FROM users u, user_roles ur WHERE u.username = ur.username AND u.username ='" + userName + "'";
@@ -39,3 +68,4 @@ public class UserDAOImpl implements UserDAO{
         return listuser;
     }
 }
+// TODO create delete user

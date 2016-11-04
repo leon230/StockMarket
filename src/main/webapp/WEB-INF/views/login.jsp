@@ -35,6 +35,7 @@
 }
 </style>
 </head>
+
 <body onload='document.loginForm.username.focus();'>
 
 	<div id="login-box">
@@ -63,6 +64,7 @@
 				<tr>
 					<td colspan='2'><input name="submit" type="submit"
 						value="submit" /></td>
+					<td><a href="${urlAddUser}">Register user</a></td>
 				</tr>
 			</table>
 
@@ -71,6 +73,5 @@
 
 		</form>
 	</div>
-
 </body>
 </html>

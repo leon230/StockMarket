@@ -3,7 +3,7 @@
 <head>
 		<link href="<c:url value="/resources/bootstrap.min.css" />" rel="stylesheet">
         <link href="<c:url value="/resources/style.css" />" rel="stylesheet">
-
+        <title>Stocks</title>
 </head>
 <sec:authorize access="hasRole('ROLE_USER')">
 		<!-- For login user -->

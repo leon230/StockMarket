@@ -12,7 +12,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="<c:url value="/resources/style.css" />" rel="stylesheet">
         <link href="<c:url value="/resources/bootstrap.min.css" />" rel="stylesheet">
-        <title>Stock Market Home</title>
     </head>
 
 <div class = "headerbar">
@@ -23,7 +22,6 @@
 	<hr>
 
     	<div class="wrapper">
-	        <h1>${title}</h1>
 	        <a>You are in stock market</a>
     	</div>
     </body>

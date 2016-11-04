@@ -8,14 +8,17 @@ public class User {
     private String userName;
     private String userPass;
     private String userRole;
+    private String userWalletId;
+
 
     public User(){}
 
-    public User(int userId, String userName, String userPass, String userRole){
+    public User(int userId, String userName, String userPass, String userRole, String userWalletId){
         this.userId = userId;
         this.userName = userName;
         this.userPass = userPass;
         this.userRole = userRole;
+        this.userWalletId = userWalletId;
     }
 
     public int getUserId(){return userId;}
@@ -34,6 +37,11 @@ public class User {
 
     public void setUserRole(String val){this.userRole = val;}
 
+    public String getUserWalletId() {
+        return userWalletId;
+    }
 
-
+    public void setUserWalletId(String userWalletId) {
+        this.userWalletId = userWalletId;
+    }
 }

@@ -41,7 +41,6 @@ public class MarketController {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
         model.addObject("currentDate",cal.getTime());
-        model.addObject("title", "Stock Main");
         model.setViewName("home");
 
         return model;
