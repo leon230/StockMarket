@@ -17,9 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /**
  * Created by lukasz.homik on 2016-11-04.
  */
@@ -56,11 +53,10 @@ public class SecurityController {
     public ModelAndView newUser(ModelAndView model) {
         User newUser = new User();
         Wallet wallet = new Wallet();
-//        SimpleDateFormat printFormat = new SimpleDateFormat("yyyyMMdd_kkmmss");
-//        Date date = new Date();
-        wallet.setWalletResource("10");
+        wallet.setWalletId("10");
+        newUser.setWallet(wallet);
+        newUser.setUserName("username");
         model.addObject("UserForm", newUser);
-        model.addObject("wallet.walletResource", wallet.getWalletResource());
         model.setViewName("UserForm");
 
 //        model.addObject("clusters", Ticket.getClustersList());
@@ -83,9 +79,7 @@ public class SecurityController {
 //            ticketDAO.saveOrUpdate(ticket);
 //            return new ModelAndView("redirect:/");
 //        }
-        user.setUserRole("ROLE_USER");
-        user.setUserWalletId(user.getUserName() + "_wallet");
-        userDAO.saveOrUpdate(user);
+        userDAO.insertOrUpdate(user);
         return new ModelAndView("redirect:/");
     }
 

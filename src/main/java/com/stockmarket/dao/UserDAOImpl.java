@@ -23,7 +23,7 @@ public class UserDAOImpl implements UserDAO{
      * @param user
      */
     @Override
-    public void saveOrUpdate(User user) {
+    public void insertOrUpdate(User user) {
         if (user.getUserId() > 0) {
             // update
             String sql = "UPDATE tickets SET TICKET_NO=?, TICKET_TITLE=?, TICKET_OWNER=?, "
@@ -32,9 +32,9 @@ public class UserDAOImpl implements UserDAO{
             jdbcTemplate.update(sql, user.getUserName());
         } else {
             // insert user table
-            String userSql = "INSERT INTO users (USERNAME,PASSWORD,WALLET_ID)"
-                    + " VALUES (?, ?, ?)";
-            jdbcTemplate.update(userSql, user.getUserName(),user.getUserPass(), user.getUserWalletId());
+            String userSql = "INSERT INTO users (USERNAME,PASSWORD)"
+                    + " VALUES (?, ?)";
+            jdbcTemplate.update(userSql, user.getUserName(),user.getUserPass());
             // insert userrole table
             String roleSql = "INSERT INTO user_roles (USERNAME,ROLE)"
                     + " VALUES (?, ?)";

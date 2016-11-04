@@ -17,11 +17,11 @@
 <jsp:include page="header.jsp" />
 <body>
 	<div class="container">
-		<h1>New/Edit User</h1>
+		<h1>User details</h1>
 		<form:form action="saveUser" method="post" modelAttribute="UserForm">
 		<form:errors path="*" class="errorblock" element="div"/>
 
-            <form:hidden path="userWalletId"/>
+            <form:hidden path="wallet.walletId"/>
             <form:hidden path="userId"/>
 
 			<spring:bind path="userName">
@@ -46,18 +46,20 @@
 			</spring:bind>
 
 			<spring:bind path="wallet.walletResource">
-            			<div class="form-group">
-            			<div class="form-group">
-            				<label class="col-sm-2 control-label">Password</label>
-            				<div class="col-sm-10">
-            					<form:input path="wallet.walletResource" type="text" class="form-control " id="wallet.walletResource" placeholder="Password" />
-            				</div>
-            			</div>
-            			</spring:bind>
+            <br />
+            <h1>User wallet</h1>
+            <div class="form-group">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Wallet resources</label>
+                <div class="col-sm-10">
+                    <form:input path="wallet.walletResource" type="text" class="form-control " id="wallet.walletResource" placeholder="Wallet Resources (PLN)" />
+                </div>
+            </div>
+            </spring:bind>
 
 			<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
-				<input type="submit" value="Save">
+				<input type="submit" value="Create">
 				<a href="./"> Cancel </a>
 			</div>
 		    </div>

@@ -22,7 +22,6 @@
 	<hr>
 
     	<div class="wrapper">
-	        <a>You are in stock market</a>
     	</div>
     </body>
 </html>

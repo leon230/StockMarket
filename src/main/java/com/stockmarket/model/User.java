@@ -8,17 +8,19 @@ public class User {
     private String userName;
     private String userPass;
     private String userRole;
-    private String userWalletId;
+    private Wallet wallet;
 
+    public User(){
+        this.userRole = "ROLE_USER";
+    }
 
-    public User(){}
-
-    public User(int userId, String userName, String userPass, String userRole, String userWalletId){
+    public User(int userId, String userName, String userPass, String userRole, Wallet wallet){
+        this();
         this.userId = userId;
         this.userName = userName;
         this.userPass = userPass;
         this.userRole = userRole;
-        this.userWalletId = userWalletId;
+        this.wallet = wallet;
     }
 
     public int getUserId(){return userId;}
@@ -37,11 +39,11 @@ public class User {
 
     public void setUserRole(String val){this.userRole = val;}
 
-    public String getUserWalletId() {
-        return userWalletId;
+    public Wallet getWallet() {
+        return wallet;
     }
 
-    public void setUserWalletId(String userWalletId) {
-        this.userWalletId = userWalletId;
+    public void setWallet(Wallet wallet) {
+        this.wallet = wallet;
     }
 }
