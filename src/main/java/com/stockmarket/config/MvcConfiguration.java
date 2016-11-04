@@ -2,6 +2,8 @@ package com.stockmarket.config;
 
 import com.stockmarket.dao.UserDAO;
 import com.stockmarket.dao.UserDAOImpl;
+import com.stockmarket.dao.WalletDAO;
+import com.stockmarket.dao.WalletDAOImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -60,6 +62,10 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter{
     @Bean
     public UserDAO getUserDAO() {
         return new UserDAOImpl(getDataSource());
+    }
+    @Bean
+    public WalletDAO getWalletDAO() {
+        return new WalletDAOImpl(getDataSource());
     }
 
 }

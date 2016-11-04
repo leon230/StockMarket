@@ -45,9 +45,10 @@
 			</div>
 			</spring:bind>
 
-			<spring:bind path="wallet.walletResource">
             <br />
             <h1>User wallet</h1>
+
+			<spring:bind path="wallet.walletResource">
             <div class="form-group">
             <div class="form-group">
                 <label class="col-sm-2 control-label">Wallet resources</label>
@@ -56,6 +57,14 @@
                 </div>
             </div>
             </spring:bind>
+
+            <br />
+            <h1>Wallet stocks</h1>
+
+
+
+
+
 
 			<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">

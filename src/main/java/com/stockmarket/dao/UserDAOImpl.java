@@ -26,10 +26,10 @@ public class UserDAOImpl implements UserDAO{
     public void insertOrUpdate(User user) {
         if (user.getUserId() > 0) {
             // update
-            String sql = "UPDATE tickets SET TICKET_NO=?, TICKET_TITLE=?, TICKET_OWNER=?, "
-                    + "CLUSTER=?, OPEN_DATE=?, CLOSE_DATE=?, DESCRIPTION=?" +
-                    ",REPORTED_BY=?, PRIORITY=?, STATUS=?, ACC_OWNER=?, REQUEST_DATE=?,DUE_DATE =? WHERE ID=?";
-            jdbcTemplate.update(sql, user.getUserName());
+//            String sql = "UPDATE tickets SET TICKET_NO=?, TICKET_TITLE=?, TICKET_OWNER=?, "
+//                    + "CLUSTER=?, OPEN_DATE=?, CLOSE_DATE=?, DESCRIPTION=?" +
+//                    ",REPORTED_BY=?, PRIORITY=?, STATUS=?, ACC_OWNER=?, REQUEST_DATE=?,DUE_DATE =? WHERE ID=?";
+//            jdbcTemplate.update(sql, user.getUserName());
         } else {
             // insert user table
             String userSql = "INSERT INTO users (USERNAME,PASSWORD)"
@@ -69,3 +69,4 @@ public class UserDAOImpl implements UserDAO{
     }
 }
 // TODO create delete user
+// TODO add password cover

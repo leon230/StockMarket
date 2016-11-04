@@ -1,8 +1,10 @@
 package com.stockmarket.controller;
 
 import com.stockmarket.dao.UserDAO;
+import com.stockmarket.dao.WalletDAO;
 import com.stockmarket.model.User;
 import com.stockmarket.model.Wallet;
+import com.stockmarket.validation.UserValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -11,10 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -25,6 +25,16 @@ public class SecurityController {
 
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    WalletDAO walletDAO;
+    @Autowired
+    UserValidation userValidation;
+
+
+    @InitBinder("UserForm")
+    public void initBinder(WebDataBinder binder){
+        binder.setValidator(userValidation);
+    }
     /**
      * Security mapping
      */
@@ -43,7 +53,6 @@ public class SecurityController {
         model.setViewName("login");
 
         return model;
-
     }
 
     /**
@@ -53,9 +62,8 @@ public class SecurityController {
     public ModelAndView newUser(ModelAndView model) {
         User newUser = new User();
         Wallet wallet = new Wallet();
-        wallet.setWalletId("10");
+
         newUser.setWallet(wallet);
-        newUser.setUserName("username");
         model.addObject("UserForm", newUser);
         model.setViewName("UserForm");
 
@@ -67,20 +75,19 @@ public class SecurityController {
     @RequestMapping(value = "/saveUser", method = RequestMethod.POST)
     public ModelAndView CheckForm(@ModelAttribute("UserForm") @Validated User user, BindingResult result
             , ModelAndView model) {
-//        if (result.hasErrors()) {
-////            ticket.initModelList();
-//            model.setViewName("UserForm");
-////            model.addObject("clusters", Ticket.getClustersList());
-////            model.addObject("statuses", Ticket.getStatusesList());
-////            model.addObject("priorities", Ticket.getPrioritiesList());
-//            return model;
-//        }
-//        else {
-//            ticketDAO.saveOrUpdate(ticket);
-//            return new ModelAndView("redirect:/");
-//        }
-        userDAO.insertOrUpdate(user);
-        return new ModelAndView("redirect:/");
+        if (result.hasErrors()) {
+//            ticket.initModelList();
+            model.setViewName("UserForm");
+//            model.addObject("clusters", Ticket.getClustersList());
+//            model.addObject("statuses", Ticket.getStatusesList());
+//            model.addObject("priorities", Ticket.getPrioritiesList());
+            return model;
+        }
+        else {
+            userDAO.insertOrUpdate(user);
+            walletDAO.insertOrUpdate(user.getWallet(), user);
+            return new ModelAndView("redirect:/");
+        }
     }
 
     /**for 403 access denied page
