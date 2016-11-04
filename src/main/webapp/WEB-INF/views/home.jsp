@@ -17,8 +17,11 @@
 <div class = "headerbar">
 <jsp:include page="header.jsp" />
 </div>
-    <body>
 
+<c:set var="username" scope = "session" value="${pageContext.request.userPrincipal.name}"/>
+
+    <body>
+    ${pageContext.request.userPrincipal.name}
 	<hr>
 
     	<div class="wrapper">

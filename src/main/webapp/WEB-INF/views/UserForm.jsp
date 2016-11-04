@@ -39,7 +39,7 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Password</label>
 				<div class="col-sm-10">
-					<form:input path="userPass" type="text" class="form-control " id="userPass" placeholder="Password" />
+					<form:input path="userPass" type="password" class="form-control " id="userPass" placeholder="Password" />
 					<form:errors path="userPass" class="control-label" />
 				</div>
 			</div>
@@ -53,14 +53,14 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">Wallet resources</label>
                 <div class="col-sm-10">
-                    <form:input path="wallet.walletResource" type="text" class="form-control " id="wallet.walletResource" placeholder="Wallet Resources (PLN)" />
+                    <form:input path="wallet.walletResource" type="text" class="form-control" id="wallet.walletResource" placeholder="Wallet Resources (PLN)" />
                 </div>
             </div>
             </spring:bind>
 
             <br />
             <h1>Wallet stocks</h1>
-
+            <br />
 
 
 
