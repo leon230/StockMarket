@@ -185,7 +185,7 @@
                 <configuration>
                     <url>http://localhost:8080/manager/text</url>
                     <server>TomcatServer</server>
-                    <path>/TicketSys</path>
+                    <path>/StockMarket</path>
                 </configuration>
             </plugin>
             <plugin>

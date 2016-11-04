@@ -9,17 +9,12 @@
 		<!-- For login user -->
 		<c:url value="/logout" var="logoutUrl" />
 		<c:url value="/home" var="urlHome" />
-        <c:url value="/home/newTicket" var="urlAddTicket" />
-        <c:url value="/charts" var="urlCharts" />
 
         <nav class="headerbar">
         	<div class="container">
         		<div class="navbar-header">
         			<a class="navbar-brand" href="${urlHome}">Home</a>
         		</div>
-        		<div class="navbar-header">
-                    <a class="navbar-brand" href="${urlCharts}">Charts</a>
-                </div>
 
         		<div id="navbar">
                     <ul class="nav navbar-nav navbar-right">
@@ -32,11 +27,6 @@
                             value="${_csrf.token}" />
                         </form>
                          </li>
-                    </ul>
-                </div>
-                <div id="navbar">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="${urlAddTicket}">Add Ticket</a></li>
                     </ul>
                 </div>
         	</div>
