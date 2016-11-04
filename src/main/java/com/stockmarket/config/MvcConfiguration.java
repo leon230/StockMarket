@@ -14,13 +14,12 @@ import org.springframework.web.servlet.view.JstlView;
 /**
  * Created by lukasz.homik on 2016-11-04.
  */
-public class MvcConfiguration extends WebMvcConfigurerAdapter{
 
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages="com.stockmarket")
 @Import({ WebSecurityConfig.class })
-public class MvcConfiguration extends WebMvcConfigurerAdapter {
+public class MvcConfiguration extends WebMvcConfigurerAdapter{
 
     @Bean
     public ViewResolver getViewResolver(){
@@ -52,7 +51,5 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
         return dataSource;
     }
-
-}
 
 }
