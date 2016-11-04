@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class Wallet {
     private String walletId;
-    private Long walletResource;
+    private String walletResource;
     private List<WalletItem> walletStockList;
 
     public String getWalletId() {
@@ -18,11 +18,11 @@ public class Wallet {
         this.walletId = walletId;
     }
 
-    public Long getWalletResource() {
+    public String getWalletResource() {
         return walletResource;
     }
 
-    public void setWalletResource(Long walletResource) {
+    public void setWalletResource(String walletResource) {
         this.walletResource = walletResource;
     }
 
@@ -35,3 +35,4 @@ public class Wallet {
     }
 }
 // TODO check if Long is fine for wallet resource
+//TODO check walletresource type

@@ -45,6 +45,16 @@
 			</div>
 			</spring:bind>
 
+			<spring:bind path="wallet.walletResource">
+            			<div class="form-group">
+            			<div class="form-group">
+            				<label class="col-sm-2 control-label">Password</label>
+            				<div class="col-sm-10">
+            					<form:input path="wallet.walletResource" type="text" class="form-control " id="wallet.walletResource" placeholder="Password" />
+            				</div>
+            			</div>
+            			</spring:bind>
+
 			<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<input type="submit" value="Save">

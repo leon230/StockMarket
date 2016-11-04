@@ -58,7 +58,9 @@ public class SecurityController {
         Wallet wallet = new Wallet();
 //        SimpleDateFormat printFormat = new SimpleDateFormat("yyyyMMdd_kkmmss");
 //        Date date = new Date();
+        wallet.setWalletResource("10");
         model.addObject("UserForm", newUser);
+        model.addObject("wallet.walletResource", wallet.getWalletResource());
         model.setViewName("UserForm");
 
 //        model.addObject("clusters", Ticket.getClustersList());
