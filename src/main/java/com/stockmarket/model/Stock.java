@@ -6,7 +6,7 @@ package com.stockmarket.model;
 public class Stock {
     private int stockId;
     private String stockCompany;
-    private double stockValue;
+    private double stockBuyPrice;
     private int stockUnit;
 
     public int getStockId() {
@@ -25,12 +25,12 @@ public class Stock {
         this.stockCompany = stockCompany;
     }
 
-    public double getStockValue() {
-        return stockValue;
+    public double getStockBuyPrice() {
+        return stockBuyPrice;
     }
 
-    public void setStockValue(double stockValue) {
-        this.stockValue = stockValue;
+    public void setStockBuyPrice(double stockBuyPrice) {
+        this.stockBuyPrice = stockBuyPrice;
     }
 
     public int getStockUnit() {

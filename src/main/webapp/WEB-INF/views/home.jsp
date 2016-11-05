@@ -19,11 +19,11 @@
 </div>
 
 <c:set var="username" scope = "session" value="${pageContext.request.userPrincipal.name}"/>
-<c:url value="home/buyStock?stockId=" var="buyStock" />
+<c:url value="home/buyStock" var="buyStock" />
 <body>
 
 <hr>
-
+<a href="home/json">Buy</a>
 <div class="wrapper">
     <table class="mainTable">
         <thead>
@@ -36,9 +36,9 @@
             <c:forEach var="stock" items="${stockList}">
                <tr>
                         <td >${stock.stockCompany}</td>
-                        <td >${stock.stockValue}</td>
+                        <td >${stock.stockBuyPrice}</td>
                         <td>
-                            <a href="${buyStock}${stock.stockId}">Buy</a>
+                            <a href="${buyStock}?stockId=${stock.stockId}&stockName=${stock.stockCompany}&stockBuyPrice=${stock.stockBuyPrice}">Buy</a>
                         </td>
                 </tr>
             </c:forEach>

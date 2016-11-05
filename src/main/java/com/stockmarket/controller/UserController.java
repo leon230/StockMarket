@@ -71,7 +71,7 @@ public class UserController {
 
 //        stock.setStockCompany("Future Processing (FP)");
 //        stock.setStockId(1);
-//        stock.setStockValue(10.5);
+//        stock.setStockBuyPrice(10.5);
 //
 //        walletItem.setWalletItemStockName(stock.getStockCompany());
 //        walletItem.setWalletItemAmount(10);
@@ -150,3 +150,4 @@ public class UserController {
 }
 // TODO add check for username length to match DB
 // TODO add stock choose possibility
+//TODO add ./ home redirection to fix double edit

@@ -32,11 +32,21 @@ public class WalletDAOImpl implements WalletDAO {
                     + " VALUES (?, ?, ?)";
             jdbcTemplate.update(walletSql, "w_" + user.getUserName(), user.getUserName(), wallet.getWalletResource());
             // insert userwallet_d table
-            String walletDetailsSql = "INSERT INTO userwallet_d (WALLET_ID, STOCK_ID, STOCK_AMOUNT, UNIT_PRICE)"
+            String walletDetailsSql = "INSERT INTO userwallet_d (WALLET_ID, STOCK_NAME, STOCK_AMOUNT, UNIT_PRICE)"
                     + " VALUES (?, ?, ?, ?)";
-            jdbcTemplate.update(walletDetailsSql, "w_" + user.getUserName(), 1, 10, 10.9);
-            jdbcTemplate.update(walletDetailsSql, "w_" + user.getUserName(), 3, 50, 200.8);
+            jdbcTemplate.update(walletDetailsSql, "w_" + user.getUserName(), "Future Processing (FP)", 10, 10.9);
+            jdbcTemplate.update(walletDetailsSql, "w_" + user.getUserName(), "FP Coin (FPC)", 50, 200.8);
         }
+    }
+    @Override
+    public void addItem(WalletItem walletItem, String walletId){
+
+        String itemSql = "INSERT INTO userwallet_d (WALLET_ID, STOCK_NAME, STOCK_AMOUNT, UNIT_PRICE)"
+                + " VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(itemSql, walletId, walletItem.getWalletItemStockName(), walletItem.getWalletItemAmount(), walletItem.getWalletItemPrice());
+
+
+
     }
 
     @Override
@@ -60,8 +70,8 @@ public class WalletDAOImpl implements WalletDAO {
     }
     @Override
     public List<WalletItem> getWalletItems(String walletId){
-        String sql = "SELECT uw.wallet_id, uwd.wallet_item_id, s.company_name, uwd.stock_amount, uwd.unit_price, " +
-                "uwd.stock_amount * uwd.unit_price AS ITEM_VALUE FROM userwallet uw, userwallet_d uwd, stocks s WHERE uw.wallet_id = uwd.wallet_id AND s.stock_id = uwd.stock_id " +
+        String sql = "SELECT uw.wallet_id, uwd.wallet_item_id, uwd.stock_name, uwd.stock_amount, uwd.unit_price, " +
+                "uwd.stock_amount * uwd.unit_price AS ITEM_VALUE FROM userwallet uw, userwallet_d uwd WHERE uw.wallet_id = uwd.wallet_id " +
                 "AND uw.wallet_id ='" + walletId + "'";
         List<WalletItem> itemList = jdbcTemplate.query(sql, new RowMapper<WalletItem>() {
 
@@ -70,7 +80,7 @@ public class WalletDAOImpl implements WalletDAO {
                 WalletItem walletItem = new WalletItem();
 
                 walletItem.setWalletItemId(rs.getString("WALLET_ITEM_ID"));
-                walletItem.setWalletItemStockName(rs.getString("COMPANY_NAME"));
+                walletItem.setWalletItemStockName(rs.getString("STOCK_NAME"));
                 walletItem.setWalletItemAmount(rs.getInt("STOCK_AMOUNT"));
                 walletItem.setWalletItemPrice(rs.getDouble("UNIT_PRICE"));
                 walletItem.setWalletItemValue(rs.getDouble("ITEM_VALUE"));
@@ -85,3 +95,4 @@ public class WalletDAOImpl implements WalletDAO {
 
     }
 }
+// TODO in add Item instead of passing wallet Id as strong try to get w_ + username
