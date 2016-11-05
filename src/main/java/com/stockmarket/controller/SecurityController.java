@@ -2,10 +2,8 @@ package com.stockmarket.controller;
 
 import com.stockmarket.dao.UserDAO;
 import com.stockmarket.dao.WalletDAO;
-import com.stockmarket.model.Stock;
 import com.stockmarket.model.User;
 import com.stockmarket.model.Wallet;
-import com.stockmarket.model.WalletItem;
 import com.stockmarket.validation.UserValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -20,8 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by lukasz.homik on 2016-11-04.
@@ -68,21 +64,21 @@ public class SecurityController {
     public ModelAndView newUser(ModelAndView model) {
         User newUser = new User();
         Wallet wallet = new Wallet();
-        Stock stock = new Stock();
-        List<WalletItem> stockList = new ArrayList<WalletItem>();
-        WalletItem walletItem = new WalletItem();
+//        Stock stock = new Stock();
+//        List<WalletItem> stockList = new ArrayList<WalletItem>();
+//        WalletItem walletItem = new WalletItem();
 
 
-        stock.setStockCompany("Future Processing (FP)");
-        stock.setStockId(1);
-        stock.setStockValue(10.5);
-
-        walletItem.setWalletItemStockName(stock.getStockCompany());
-        walletItem.setWalletItemAmount(10);
-
-        stockList.add(walletItem);
-
-        wallet.setWalletStockList(stockList);
+//        stock.setStockCompany("Future Processing (FP)");
+//        stock.setStockId(1);
+//        stock.setStockValue(10.5);
+//
+//        walletItem.setWalletItemStockName(stock.getStockCompany());
+//        walletItem.setWalletItemAmount(10);
+//
+//        stockList.add(walletItem);
+//
+//        wallet.setWalletStockList(stockList);
 
         newUser.setWallet(wallet);
         model.addObject("listStock", wallet.getWalletStockList());
@@ -153,3 +149,4 @@ public class SecurityController {
 
 }
 // TODO add check for username length to match DB
+// TODO add stock choose possibility
