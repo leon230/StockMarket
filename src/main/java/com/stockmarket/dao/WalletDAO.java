@@ -12,6 +12,7 @@ import java.util.List;
 public interface WalletDAO {
     public void insertOrUpdate(Wallet wallet, User user);
     public void addItem (WalletItem walletItem, String walletId);
+    public void updateResources (String walletId, double walletResources);
     public void delete(int walletId);
     public Wallet getWallet(String username);
     public List<WalletItem> getWalletItems(String walletId);

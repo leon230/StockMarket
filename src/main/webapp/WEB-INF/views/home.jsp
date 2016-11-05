@@ -53,6 +53,7 @@
 
     <br />
 <c:set var="itemValue" value="${walletItem.walletItemAmount * walletItem.walletItemPrice}"/>
+    <a>Wallet resources: ${walletResources}</a>
     <table class="mainTable">
             <thead>
                 <th>Company</th>
@@ -69,7 +70,7 @@
                             <td >${walletItem.walletItemPrice}</td>
                             <td >${walletItem.walletItemAmount}</td>
                             <td >${walletItem.walletItemValue}</td>
-                            <td >${walletId}</td>
+                            <td ><a href ="#">Sell</a></td>
 
                     </tr>
                 </c:forEach>

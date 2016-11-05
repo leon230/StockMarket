@@ -31,24 +31,24 @@ public class WalletDAOImpl implements WalletDAO {
             String walletSql = "INSERT INTO userwallet (WALLET_ID, USER_ID, WALLET_RESOURCE)"
                     + " VALUES (?, ?, ?)";
             jdbcTemplate.update(walletSql, "w_" + user.getUserName(), user.getUserName(), wallet.getWalletResource());
-            // insert userwallet_d table
-            String walletDetailsSql = "INSERT INTO userwallet_d (WALLET_ID, STOCK_NAME, STOCK_AMOUNT, UNIT_PRICE)"
-                    + " VALUES (?, ?, ?, ?)";
-            jdbcTemplate.update(walletDetailsSql, "w_" + user.getUserName(), "Future Processing (FP)", 10, 10.9);
-            jdbcTemplate.update(walletDetailsSql, "w_" + user.getUserName(), "FP Coin (FPC)", 50, 200.8);
+//            // insert userwallet_d table
+//            String walletDetailsSql = "INSERT INTO userwallet_d (WALLET_ID, STOCK_NAME, STOCK_AMOUNT, UNIT_PRICE)"
+//                    + " VALUES (?, ?, ?, ?)";
+//            jdbcTemplate.update(walletDetailsSql, "w_" + user.getUserName(), "Future Processing (FP)", 10, 10.9);
+//            jdbcTemplate.update(walletDetailsSql, "w_" + user.getUserName(), "FP Coin (FPC)", 50, 200.8);
         }
+    }
+    @Override
+    public void updateResources(String walletId, double walletResources){
+        String updateSql = "UPDATE userwallet SET WALLET_RESOURCE=? WHERE WALLET_ID=?";
+        jdbcTemplate.update(updateSql, walletResources, walletId);
     }
     @Override
     public void addItem(WalletItem walletItem, String walletId){
 
         String itemSql = "INSERT INTO userwallet_d (WALLET_ID, STOCK_NAME, STOCK_AMOUNT, UNIT_PRICE)"
                 + " VALUES (?, ?, ?, ?)";
-        try {
-            jdbcTemplate.update(itemSql, walletId, walletItem.getWalletItemStockName(), walletItem.getWalletItemAmount(), walletItem.getWalletItemPrice());
-        }
-        catch (Exception sex){
-            sex.toString();
-        }
+        jdbcTemplate.update(itemSql, walletId, walletItem.getWalletItemStockName(), walletItem.getWalletItemAmount(), walletItem.getWalletItemPrice());
 
 
 

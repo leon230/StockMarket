@@ -6,15 +6,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 /**
  * Created by Leon on 2016-11-05.
  */
 
 public class ReadFromServer {
 
-    public String getJSON() {
+    public static String getJSON() {
         HttpURLConnection c = null;
         String url = "http://webtask.future-processing.com:8068/stocks";
         int timeout  = 500;
@@ -41,20 +39,19 @@ public class ReadFromServer {
                         sb.append(line+"\n");
                     }
                     br.close();
-//                    System.out.println(sb.toString());
                     return sb.toString();
             }
 
         } catch (MalformedURLException ex) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.toString());
         } catch (IOException ex) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.toString());
         } finally {
             if (c != null) {
                 try {
                     c.disconnect();
                 } catch (Exception ex) {
-                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+                    System.out.println(ex.toString());
                 }
             }
         }
