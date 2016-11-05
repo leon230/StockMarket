@@ -1,11 +1,10 @@
 package com.stockmarket.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stockmarket.dao.UserDAO;
 import com.stockmarket.dao.WalletDAO;
-import com.stockmarket.model.Stock;
-import com.stockmarket.model.User;
-import com.stockmarket.model.Wallet;
-import com.stockmarket.model.WalletItem;
+import com.stockmarket.model.*;
+import com.stockmarket.utils.ReadFromServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -51,6 +50,29 @@ public class MarketController {
         user = userDAO.getUser(this.setUser());
         wallet = walletDAO.getWallet(this.setUser());
         wallet.setWalletStockList(walletDAO.getWalletItems(wallet.getWalletId()));
+//        List<items> stockJsonList = new ArrayList<>();
+        items stockJsonList = new items();
+        String exc = "";
+
+        ReadFromServer readFromServer = new ReadFromServer();
+
+        String jsonData = readFromServer.getJSON();
+
+        try {
+            StockJson stockJson = new StockJson();
+            ObjectMapper mapper = new ObjectMapper();
+
+            stockJsonList = mapper.readValue(jsonData, items.class);
+        }
+
+         catch (Exception e) {
+            exc = e.getMessage();
+        }
+
+
+
+
+
 
 
         user.setWallet(wallet);
@@ -72,6 +94,8 @@ public class MarketController {
 
 
         model.addObject("walletId",wallet.getWalletId());
+        model.addObject("stockJsonList",stockJsonList);
+        model.addObject("exc",exc);
         model.addObject("stockList", stockList);
         model.addObject("wallItems", wallet.getWalletStockList());
 

@@ -70,6 +70,28 @@
             </tbody>
     </table>
 </div>
+<br />
+        <table class="mainTable">
+                <thead>
+                    <th>name</th>
+                    <th>code</th>
+                    <th>unit</th>
+                    <th>price</th>
+                    <th>publicationDate</th>
+                </thead>
+               <tbody>
+
+                           <c:forEach var="sItem" items="${stockJsonList.items}">
+                              <tr>
+                                       <td >${sItem.name}</td>
+                                       <td >${sItem.code}</td>
+                                       <td >${sItem.unit}</td>
+                                       <td >${sItem.price}</td>
+                                       <td >${stockJsonList.publicationDate}</td>
+                               </tr>
+                           </c:forEach>
+                       </tbody>
+                   </table>
     </body>
 </html>
 </sec:authorize>
