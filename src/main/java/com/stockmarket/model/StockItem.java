@@ -3,7 +3,7 @@ package com.stockmarket.model;
 /**
  * Created by Leon on 2016-11-05.
  */
-public class StockJson {
+public class StockItem {
     private String name;
     private String code;
     private String unit;

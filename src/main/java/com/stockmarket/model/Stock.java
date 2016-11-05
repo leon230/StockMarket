@@ -1,43 +1,27 @@
 package com.stockmarket.model;
 
+import java.util.List;
+
 /**
  * Created by lukasz.homik on 2016-11-04.
  */
 public class Stock {
-    private int stockId;
-    private String stockCompany;
-    private double stockBuyPrice;
-    private int stockUnit;
+    private String publicationDate;
+    List<StockItem> items;
 
-    public int getStockId() {
-        return stockId;
+    public String getPublicationDate() {
+        return publicationDate;
     }
 
-    public void setStockId(int stockId) {
-        this.stockId = stockId;
+    public void setPublicationDate(String publicationDate) {
+        this.publicationDate = publicationDate;
     }
 
-    public String getStockCompany() {
-        return stockCompany;
+    public List<StockItem> getItems() {
+        return items;
     }
 
-    public void setStockCompany(String stockCompany) {
-        this.stockCompany = stockCompany;
-    }
-
-    public double getStockBuyPrice() {
-        return stockBuyPrice;
-    }
-
-    public void setStockBuyPrice(double stockBuyPrice) {
-        this.stockBuyPrice = stockBuyPrice;
-    }
-
-    public int getStockUnit() {
-        return stockUnit;
-    }
-
-    public void setStockUnit(int stockUnit) {
-        this.stockUnit = stockUnit;
+    public void setItems(List<StockItem> items) {
+        this.items = items;
     }
 }

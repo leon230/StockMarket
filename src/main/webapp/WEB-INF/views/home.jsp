@@ -25,25 +25,31 @@
 <hr>
 <a href="home/json">Buy</a>
 <div class="wrapper">
-    <table class="mainTable">
-        <thead>
-            <th>Company</th>
-            <th>Value</th>
-            <th>Action</th>
-        </thead>
-        <tbody>
+        <table class="mainTable">
+                <thead>
+                    <th>name</th>
+                    <th>code</th>
+                    <th>unit</th>
+                    <th>price</th>
+                    <th>publicationDate</th>
+                    <th>Action</th>
+                </thead>
+               <tbody>
 
-            <c:forEach var="stock" items="${stockList}">
-               <tr>
-                        <td >${stock.stockCompany}</td>
-                        <td >${stock.stockBuyPrice}</td>
-                        <td>
-                            <a href="${buyStock}?stockId=${stock.stockId}&stockName=${stock.stockCompany}&stockBuyPrice=${stock.stockBuyPrice}">Buy</a>
-                        </td>
-                </tr>
-            </c:forEach>
-        </tbody>
-    </table>
+                           <c:forEach var="stockItem" items="${stockJson.items}">
+                              <tr>
+                                       <td >${stockItem.name}</td>
+                                       <td >${stockItem.code}</td>
+                                       <td >${stockItem.unit}</td>
+                                       <td >${stockItem.price}</td>
+                                       <td >${stockJson.publicationDate}</td>
+                                       <td>
+                                           <a href="${buyStock}?stockName=${stockItem.name}&stockBuyPrice=${stockItem.price}">Buy</a>
+                                       </td>
+                               </tr>
+                           </c:forEach>
+                       </tbody>
+                   </table>
 
     <br />
 <c:set var="itemValue" value="${walletItem.walletItemAmount * walletItem.walletItemPrice}"/>
@@ -71,27 +77,7 @@
     </table>
 </div>
 <br />
-        <table class="mainTable">
-                <thead>
-                    <th>name</th>
-                    <th>code</th>
-                    <th>unit</th>
-                    <th>price</th>
-                    <th>publicationDate</th>
-                </thead>
-               <tbody>
 
-                           <c:forEach var="sItem" items="${stockJsonList.items}">
-                              <tr>
-                                       <td >${sItem.name}</td>
-                                       <td >${sItem.code}</td>
-                                       <td >${sItem.unit}</td>
-                                       <td >${sItem.price}</td>
-                                       <td >${stockJsonList.publicationDate}</td>
-                               </tr>
-                           </c:forEach>
-                       </tbody>
-                   </table>
     </body>
 </html>
 </sec:authorize>

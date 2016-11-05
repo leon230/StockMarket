@@ -43,7 +43,12 @@ public class WalletDAOImpl implements WalletDAO {
 
         String itemSql = "INSERT INTO userwallet_d (WALLET_ID, STOCK_NAME, STOCK_AMOUNT, UNIT_PRICE)"
                 + " VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(itemSql, walletId, walletItem.getWalletItemStockName(), walletItem.getWalletItemAmount(), walletItem.getWalletItemPrice());
+        try {
+            jdbcTemplate.update(itemSql, walletId, walletItem.getWalletItemStockName(), walletItem.getWalletItemAmount(), walletItem.getWalletItemPrice());
+        }
+        catch (Exception sex){
+            sex.toString();
+        }
 
 
 

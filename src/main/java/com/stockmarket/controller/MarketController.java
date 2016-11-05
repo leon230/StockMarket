@@ -51,7 +51,7 @@ public class MarketController {
         wallet = walletDAO.getWallet(this.setUser());
         wallet.setWalletStockList(walletDAO.getWalletItems(wallet.getWalletId()));
 //        List<items> stockJsonList = new ArrayList<>();
-        items stockJsonList = new items();
+        Stock stockJson = new Stock();
         String exc = "";
 
         ReadFromServer readFromServer = new ReadFromServer();
@@ -59,10 +59,9 @@ public class MarketController {
         String jsonData = readFromServer.getJSON();
 
         try {
-            StockJson stockJson = new StockJson();
             ObjectMapper mapper = new ObjectMapper();
 
-            stockJsonList = mapper.readValue(jsonData, items.class);
+            stockJson = mapper.readValue(jsonData, Stock.class);
         }
 
          catch (Exception e) {
@@ -70,33 +69,11 @@ public class MarketController {
         }
 
 
-
-
-
-
-
         user.setWallet(wallet);
-
-        Stock stock = new Stock();
-        stock.setStockId(1);
-        stock.setStockCompany("Future Processing (FP)");
-        stock.setStockBuyPrice(10.6);
-        stock.setStockUnit(1);
-
-        Stock stock2 = new Stock();
-        stock2.setStockId(2);
-        stock2.setStockCompany("FP Lab (FPL)");
-        stock2.setStockBuyPrice(200.4);
-        stock2.setStockUnit(100);
-
-        stockList.add(stock);
-        stockList.add(stock2);
 
 
         model.addObject("walletId",wallet.getWalletId());
-        model.addObject("stockJsonList",stockJsonList);
-        model.addObject("exc",exc);
-        model.addObject("stockList", stockList);
+        model.addObject("stockJson",stockJson);
         model.addObject("wallItems", wallet.getWalletStockList());
 
 
@@ -111,7 +88,7 @@ public class MarketController {
      */
     @RequestMapping(value = "/home/buyStock", method = RequestMethod.GET)
     public ModelAndView newUser(ModelAndView model, HttpServletRequest request) {
-        int stockId = Integer.parseInt(request.getParameter("stockId"));
+//        int stockId = Integer.parseInt(request.getParameter("stockId"));
         String stockName = request.getParameter("stockName");
         double stockBuyPrice = Double.parseDouble(request.getParameter("stockBuyPrice"));
 
@@ -123,14 +100,13 @@ public class MarketController {
 
         WalletItem walletItem = new WalletItem();
 
-
         walletItem.setWalletItemStockName(stockName);
         walletItem.setWalletItemPrice(stockBuyPrice);
 
 
 //        model.addObject("walletItem", walletItem);
         model.addObject("walletId", wallet.getWalletId());
-        model.addObject("stockName", stockName);
+        model.addObject("stockiname", walletItem.getWalletItemStockName());
         model.addObject("StockForm", walletItem);
         model.setViewName("StockForm");
 //
