@@ -9,6 +9,7 @@
 		<!-- For login user -->
 		<c:url value="/logout" var="logoutUrl" />
 		<c:url value="/home" var="urlHome" />
+		<c:url value="home/editUser?username=" var="editUser" />
 
         <nav class="headerbar">
         	<div class="container">
@@ -18,15 +19,27 @@
 
         		<div id="navbar">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active">
-                        <c:if test="${pageContext.request.userPrincipal.name != null}">
-                            <a href="javascript:formSubmit()"> Logout</a>
-                         </c:if>
-                         <form action="${logoutUrl}" method="post" id="logoutForm">
-                            <input type="hidden" name="${_csrf.parameterName}"
-                            value="${_csrf.token}" />
-                        </form>
-                         </li>
+
+					<li class = "navbar-username">
+                        <span class="navbar-text">
+                        <a>Loged in as : ${pageContext.request.userPrincipal.name}</a>
+                        </span>
+					</li>
+
+					<li>
+                        <a href = "${editUser}${pageContext.request.userPrincipal.name}">Edit profile</a>
+                    </li>
+
+                    <li class="active">
+                    <c:if test="${pageContext.request.userPrincipal.name != null}">
+                        <a href="javascript:formSubmit()"> Logout</a>
+                     </c:if>
+                     <form action="${logoutUrl}" method="post" id="logoutForm">
+                        <input type="hidden" name="${_csrf.parameterName}"
+                        value="${_csrf.token}" />
+                    </form>
+
+                    </li>
                     </ul>
                 </div>
         	</div>

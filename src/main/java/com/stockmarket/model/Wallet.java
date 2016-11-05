@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class Wallet {
     private String walletId;
-    private String walletResource;
+    private Double walletResource;
     private List<WalletItem> walletStockList;
 
     public String getWalletId() {
@@ -18,11 +18,11 @@ public class Wallet {
         this.walletId = walletId;
     }
 
-    public String getWalletResource() {
+    public Double getWalletResource() {
         return walletResource;
     }
 
-    public void setWalletResource(String walletResource) {
+    public void setWalletResource(Double walletResource) {
         this.walletResource = walletResource;
     }
 

@@ -19,6 +19,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,7 +94,7 @@ public class SecurityController {
 //        model.addObject("priorities", Ticket.getPrioritiesList());
         return model;
     }
-    @RequestMapping(value = "/saveUser", method = RequestMethod.POST)
+    @RequestMapping(value = "**/saveUser", method = RequestMethod.POST)
     public ModelAndView CheckForm(@ModelAttribute("UserForm") @Validated User user, BindingResult result
             , ModelAndView model) {
         if (result.hasErrors()) {
@@ -110,7 +111,24 @@ public class SecurityController {
             return new ModelAndView("redirect:/");
         }
     }
+/**
+ * User Edit
+ */
+    @RequestMapping(value = "/home/editUser", method = RequestMethod.GET)
+    public ModelAndView editUser(HttpServletRequest request) {
+        String username = request.getParameter("username");
 
+        User editedUser = userDAO.getUser(username);
+        editedUser.setWallet(walletDAO.getWallet(username));
+
+        ModelAndView model = new ModelAndView("UserForm");
+//        model.addObject("clusters", Ticket.getClustersList());
+//        model.addObject("statuses", Ticket.getStatusesList());
+//        model.addObject("priorities", Ticket.getPrioritiesList());
+        model.addObject("UserForm", editedUser);
+//
+        return model;
+    }
     /**for 403 access denied page
      *
      */

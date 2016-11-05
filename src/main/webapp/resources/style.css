@@ -112,6 +112,10 @@ div.wrapper {
 h1{
 	color: #000000;
 }
+.navbar-username a{
+	color: #fff;
+
+}
 .filterDiv{
 	border: 1px solid rgba(242, 242, 242, .9);
 	height: 20px;
