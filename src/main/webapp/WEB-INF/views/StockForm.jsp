@@ -17,20 +17,20 @@
 <jsp:include page="header.jsp" />
 <body>
 	<div class="container">
-        <h1>Buying: ${stockiname}</h1>
+        <h1>Stock details</h1>
             <form:form action="addStock?walletId=${walletId}" method="post" modelAttribute="StockForm">
             <form:errors path="*" class="errorblock" element="div"/>
 
 
                 <spring:bind path="walletItemStockName">
-                         \       <div class="form-group">
-      zzz     llllll                         <label class="col-sm-2 control-label">Amount</label>
-                                    <div class="col-sm-10">
-                                        <form:input path="walletItemStockName" type="text" class="form-control " id="walletItemStockName" placeholder="walletItemStockName" />
-                                 ks       <form:errors path="walletItemStockName" class="control-label" />
-                                    </div>
-                                </div>
-                                </spring:bind>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Stock name</label>
+                        <div class="col-sm-10">
+                            <form:input path="walletItemStockName" type="text" class="form-control " id="walletItemStockName" placeholder="Stock name" />
+                            <form:errors path="walletItemStockName" class="control-label" />
+                        </div>
+                    </div>
+                </spring:bind>
 
 
                 <spring:bind path="walletItemAmount">

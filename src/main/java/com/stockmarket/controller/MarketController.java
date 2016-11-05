@@ -5,12 +5,15 @@ import com.stockmarket.dao.UserDAO;
 import com.stockmarket.dao.WalletDAO;
 import com.stockmarket.model.*;
 import com.stockmarket.utils.ReadFromServer;
+import com.stockmarket.validation.WalletItemValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,13 +28,19 @@ import java.util.List;
  * Created by lukasz.homik on 2016-11-04.
  */
 @Controller
-
 public class MarketController {
 
     @Autowired
     private UserDAO userDAO;
     @Autowired
     WalletDAO walletDAO;
+    @Autowired
+    WalletItemValidation walletItemValidation;
+
+    @InitBinder("StockForm")
+    public void initBinder(WebDataBinder binder){
+        binder.setValidator(walletItemValidation);
+    }
 /**
  * Home mapping
  */
@@ -88,28 +97,21 @@ public class MarketController {
      */
     @RequestMapping(value = "/home/buyStock", method = RequestMethod.GET)
     public ModelAndView newUser(ModelAndView model, HttpServletRequest request) {
-//        int stockId = Integer.parseInt(request.getParameter("stockId"));
         String stockName = request.getParameter("stockName");
         double stockBuyPrice = Double.parseDouble(request.getParameter("stockBuyPrice"));
 
-
-
         Wallet wallet = new Wallet();
-        wallet = walletDAO.getWallet(this.setUser());
-
-
         WalletItem walletItem = new WalletItem();
+
+        wallet = walletDAO.getWallet(this.setUser());
 
         walletItem.setWalletItemStockName(stockName);
         walletItem.setWalletItemPrice(stockBuyPrice);
 
-
-//        model.addObject("walletItem", walletItem);
         model.addObject("walletId", wallet.getWalletId());
-        model.addObject("stockiname", walletItem.getWalletItemStockName());
         model.addObject("StockForm", walletItem);
         model.setViewName("StockForm");
-//
+
         return model;
     }
 
@@ -124,22 +126,16 @@ public class MarketController {
     @RequestMapping(value = "home/addStock", method = RequestMethod.POST)
     public ModelAndView CheckForm(HttpServletRequest request, @ModelAttribute("StockForm") @Validated WalletItem walletItem, BindingResult result
             , ModelAndView model) {
-//        if (result.hasErrors()) {
-////            ticket.initModelList();
-//            model.setViewName("UserForm");
-////            model.addObject("clusters", Ticket.getClustersList());
-////            model.addObject("statuses", Ticket.getStatusesList());
-////            model.addObject("priorities", Ticket.getPrioritiesList());
-//            return model;
-//        }
-//        else {
+        if (result.hasErrors()) {
+            model.setViewName("StockForm");
+            return model;
+        }
+        else {
         String walletId = request.getParameter("walletId");
         walletDAO.addItem(walletItem, walletId);
 
-
-
         return new ModelAndView("redirect:/");
-//        }
+        }
     }
     public String setUser(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -149,3 +145,4 @@ public class MarketController {
     }
 
 }
+// TODO parameters to another form using java

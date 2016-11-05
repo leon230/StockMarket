@@ -64,41 +64,19 @@ public class UserController {
     public ModelAndView newUser(ModelAndView model) {
         User newUser = new User();
         Wallet wallet = new Wallet();
-//        Stock stock = new Stock();
-//        List<WalletItem> stockList = new ArrayList<WalletItem>();
-//        WalletItem walletItem = new WalletItem();
-
-
-//        stock.setStockCompany("Future Processing (FP)");
-//        stock.setStockId(1);
-//        stock.setStockBuyPrice(10.5);
-//
-//        walletItem.setWalletItemStockName(stock.getStockCompany());
-//        walletItem.setWalletItemAmount(10);
-//
-//        stockList.add(walletItem);
-//
-//        wallet.setWalletStockList(stockList);
 
         newUser.setWallet(wallet);
         model.addObject("listStock", wallet.getWalletStockList());
         model.addObject("UserForm", newUser);
         model.setViewName("UserForm");
 
-//        model.addObject("clusters", Ticket.getClustersList());
-//        model.addObject("statuses", Ticket.getStatusesList());
-//        model.addObject("priorities", Ticket.getPrioritiesList());
         return model;
     }
     @RequestMapping(value = "**/saveUser", method = RequestMethod.POST)
     public ModelAndView CheckForm(@ModelAttribute("UserForm") @Validated User user, BindingResult result
             , ModelAndView model) {
         if (result.hasErrors()) {
-//            ticket.initModelList();
             model.setViewName("UserForm");
-//            model.addObject("clusters", Ticket.getClustersList());
-//            model.addObject("statuses", Ticket.getStatusesList());
-//            model.addObject("priorities", Ticket.getPrioritiesList());
             return model;
         }
         else {
