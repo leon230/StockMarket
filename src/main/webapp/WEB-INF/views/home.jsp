@@ -15,17 +15,61 @@
     </head>
 
 <div class = "headerbar">
-<jsp:include page="header.jsp" />
+    <jsp:include page="header.jsp" />
 </div>
 
 <c:set var="username" scope = "session" value="${pageContext.request.userPrincipal.name}"/>
+<c:url value="home/buyStock?stockId=" var="buyStock" />
+<body>
 
-    <body>
+<hr>
 
-	<hr>
+<div class="wrapper">
+    <table class="mainTable">
+        <thead>
+            <th>Company</th>
+            <th>Value</th>
+            <th>Action</th>
+        </thead>
+        <tbody>
 
-    	<div class="wrapper">
-    	</div>
+            <c:forEach var="stock" items="${stockList}">
+               <tr>
+                        <td >${stock.stockCompany}</td>
+                        <td >${stock.stockValue}</td>
+                        <td>
+                            <a href="${buyStock}${stock.stockId}">Buy</a>
+                        </td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+
+    <br />
+<c:set var="itemValue" value="${walletItem.walletItemAmount * walletItem.walletItemPrice}"/>
+    <table class="mainTable">
+            <thead>
+                <th>Company</th>
+                <th>Unit price</th>
+                <th>Amount</th>
+                <th>Value</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+
+                <c:forEach var="walletItem" items="${wallItems}">
+                   <tr>
+                            <td >${walletItem.walletItemStockName}</td>
+                            <td >${walletItem.walletItemPrice}</td>
+                            <td >${walletItem.walletItemAmount}</td>
+                            <td >${walletItem.walletItemValue}</td>
+                            <td >${walletId}</td>
+
+                    </tr>
+                </c:forEach>
+            </tbody>
+    </table>
+</div>
     </body>
 </html>
 </sec:authorize>

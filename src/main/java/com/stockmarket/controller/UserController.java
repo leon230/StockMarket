@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by lukasz.homik on 2016-11-04.
  */
 @Controller
-public class SecurityController {
+public class UserController {
 
     @Autowired
     private UserDAO userDAO;

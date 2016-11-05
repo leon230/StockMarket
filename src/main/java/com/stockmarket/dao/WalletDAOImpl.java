@@ -2,12 +2,14 @@ package com.stockmarket.dao;
 
 import com.stockmarket.model.User;
 import com.stockmarket.model.Wallet;
+import com.stockmarket.model.WalletItem;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by Leon on 2016-11-04.
@@ -33,6 +35,7 @@ public class WalletDAOImpl implements WalletDAO {
             String walletDetailsSql = "INSERT INTO userwallet_d (WALLET_ID, STOCK_ID, STOCK_AMOUNT, UNIT_PRICE)"
                     + " VALUES (?, ?, ?, ?)";
             jdbcTemplate.update(walletDetailsSql, "w_" + user.getUserName(), 1, 10, 10.9);
+            jdbcTemplate.update(walletDetailsSql, "w_" + user.getUserName(), 3, 50, 200.8);
         }
     }
 
@@ -54,5 +57,31 @@ public class WalletDAOImpl implements WalletDAO {
                 return wallet;
             }
         });
+    }
+    @Override
+    public List<WalletItem> getWalletItems(String walletId){
+        String sql = "SELECT uw.wallet_id, uwd.wallet_item_id, s.company_name, uwd.stock_amount, uwd.unit_price, " +
+                "uwd.stock_amount * uwd.unit_price AS ITEM_VALUE FROM userwallet uw, userwallet_d uwd, stocks s WHERE uw.wallet_id = uwd.wallet_id AND s.stock_id = uwd.stock_id " +
+                "AND uw.wallet_id ='" + walletId + "'";
+        List<WalletItem> itemList = jdbcTemplate.query(sql, new RowMapper<WalletItem>() {
+
+            @Override
+            public WalletItem mapRow(ResultSet rs, int rowNum) throws SQLException {
+                WalletItem walletItem = new WalletItem();
+
+                walletItem.setWalletItemId(rs.getString("WALLET_ITEM_ID"));
+                walletItem.setWalletItemStockName(rs.getString("COMPANY_NAME"));
+                walletItem.setWalletItemAmount(rs.getInt("STOCK_AMOUNT"));
+                walletItem.setWalletItemPrice(rs.getDouble("UNIT_PRICE"));
+                walletItem.setWalletItemValue(rs.getDouble("ITEM_VALUE"));
+
+                return walletItem;
+            }
+
+        });
+
+        return itemList;
+
+
     }
 }

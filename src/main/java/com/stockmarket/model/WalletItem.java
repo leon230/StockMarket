@@ -6,7 +6,9 @@ package com.stockmarket.model;
 public class WalletItem {
     private String walletItemId;
     private String walletItemStockName;
-    private Integer walletItemAmount;
+    private int walletItemAmount;
+    private double walletItemPrice;
+    private double walletItemValue;
 
     public String getWalletItemId() {
         return walletItemId;
@@ -24,12 +26,28 @@ public class WalletItem {
         this.walletItemStockName = walletItemStockName;
     }
 
-    public Integer getWalletItemAmount() {
+    public int getWalletItemAmount() {
         return walletItemAmount;
     }
 
-    public void setWalletItemAmount(Integer walletItemAmount) {
+    public void setWalletItemAmount(int walletItemAmount) {
         this.walletItemAmount = walletItemAmount;
+    }
+
+    public double getWalletItemPrice() {
+        return walletItemPrice;
+    }
+
+    public void setWalletItemPrice(double walletItemPrice) {
+        this.walletItemPrice = walletItemPrice;
+    }
+
+    public double getWalletItemValue() {
+        return walletItemValue;
+    }
+
+    public void setWalletItemValue(double walletItemValue) {
+        this.walletItemValue = walletItemValue;
     }
 }
 // TODO check if integer is fine for amount value

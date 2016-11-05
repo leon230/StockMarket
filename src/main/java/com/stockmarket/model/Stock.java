@@ -7,6 +7,7 @@ public class Stock {
     private int stockId;
     private String stockCompany;
     private double stockValue;
+    private int stockUnit;
 
     public int getStockId() {
         return stockId;
@@ -30,5 +31,13 @@ public class Stock {
 
     public void setStockValue(double stockValue) {
         this.stockValue = stockValue;
+    }
+
+    public int getStockUnit() {
+        return stockUnit;
+    }
+
+    public void setStockUnit(int stockUnit) {
+        this.stockUnit = stockUnit;
     }
 }
