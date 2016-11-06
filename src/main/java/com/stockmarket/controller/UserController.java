@@ -94,11 +94,8 @@ public class UserController {
 
         User editedUser = userDAO.getUser(username);
         editedUser.setWallet(walletDAO.getWallet(username));
-
         ModelAndView model = new ModelAndView("UserForm");
-//        model.addObject("clusters", Ticket.getClustersList());
-//        model.addObject("statuses", Ticket.getStatusesList());
-//        model.addObject("priorities", Ticket.getPrioritiesList());
+        model.addObject("formType","Edit");
         model.addObject("UserForm", editedUser);
 //
         return model;
@@ -126,6 +123,7 @@ public class UserController {
     }
 
 }
-// TODO add check for username length to match DB
+
 // TODO add stock choose possibility
 //TODO add ./ home redirection to fix double edit
+//TODO change ifnull query for wallet resource to check in java

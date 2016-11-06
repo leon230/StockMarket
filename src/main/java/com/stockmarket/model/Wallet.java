@@ -35,4 +35,3 @@ public class Wallet {
     }
 }
 // TODO check if Long is fine for wallet resource
-//TODO check walletresource type

@@ -1,6 +1,7 @@
 package com.stockmarket.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.stockmarket.dao.StockDAO;
 import com.stockmarket.dao.UserDAO;
 import com.stockmarket.dao.WalletDAO;
 import com.stockmarket.model.Stock;
@@ -35,6 +36,8 @@ public class MarketController {
     private UserDAO userDAO;
     @Autowired
     WalletDAO walletDAO;
+    @Autowired
+    StockDAO stockDAO;
     @Autowired
     WalletItemValidation walletItemValidation;
 
@@ -80,6 +83,7 @@ public class MarketController {
     public ModelAndView newUser(ModelAndView model, HttpServletRequest request) {
         String stockName = request.getParameter("stockName");
         double stockBuyPrice = Double.parseDouble(request.getParameter("stockBuyPrice"));
+        int stockUnit = Integer.parseInt(request.getParameter("stockUnit"));
 
         Wallet wallet = new Wallet();
         WalletItem walletItem = new WalletItem();
@@ -89,8 +93,12 @@ public class MarketController {
         walletItem.setWalletItemStockName(stockName);
         walletItem.setWalletItemPrice(stockBuyPrice);
 
+
+
         model.addObject("walletId", wallet.getWalletId());
         model.addObject("StockForm", walletItem);
+        model.addObject("stockUnit", stockUnit);
+        model.addObject("stockAmount", stockDAO.getAmountAvailable(stockName));
         model.setViewName("StockForm");
 
         return model;
@@ -106,14 +114,27 @@ public class MarketController {
         else {
             Wallet wallet = new Wallet();
             wallet = walletDAO.getWallet(this.setUser());
-            String walletId = request.getParameter("walletId");
-            walletDAO.addItem(walletItem, walletId);
-            walletDAO.updateResources(walletId, wallet.getWalletResource() - (walletItem.getWalletItemAmount()*walletItem.getWalletItemPrice()));
+            walletDAO.addItem(walletItem, wallet.getWalletId());
+            walletDAO.updateResources(wallet.getWalletId(), wallet.getWalletResource() - (walletItem.getWalletItemAmount()*walletItem.getWalletItemPrice()));
 
         return new ModelAndView("redirect:/");
         }
     }
+/**
+ * Sell stock mapping
+ */
+    @RequestMapping(value = "home/sellStock", method = RequestMethod.GET)
+    public ModelAndView sellStock(HttpServletRequest request) {
+        int walletItemId = Integer.parseInt(request.getParameter("walletItemId"));
+        double resourceAmount = Double.parseDouble(request.getParameter("resourceAmount"));
+        Wallet wallet = new Wallet();
+        wallet = walletDAO.getWallet(this.setUser());
 
+        walletDAO.delete(walletItemId);
+        walletDAO.updateResources(wallet.getWalletId(), wallet.getWalletResource() + resourceAmount);
+
+        return new ModelAndView("redirect:/");
+    }
     /**
      * Retrieves loged user
      */
@@ -131,3 +152,4 @@ public class MarketController {
 
 }
 // TODO parameters to another form using java
+// TODO add initial stock values

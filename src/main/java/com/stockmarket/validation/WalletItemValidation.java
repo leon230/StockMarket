@@ -17,13 +17,14 @@ public class WalletItemValidation implements Validator {
     }
     @Override
     public void validate(Object target, Errors errors) {
-        WalletItem walletItem = (WalletItem) target;
-
-        if(walletItem.getWalletItemAmount() == 0){
-            errors.rejectValue("walletItemAmount", "NotEmpty.StockForm.walletItemAmount");
-        }
+//        WalletItem walletItem = (WalletItem) target;
+//
+//        if(walletItem.getWalletItemAmount() == 0){
+//            errors.rejectValue("walletItemAmount", "NotEmpty.StockForm.walletItemAmount");
+//        }
 
 
 
     }
 }
+//TODO fuckup jak null w amount

@@ -12,6 +12,23 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="<c:url value="/resources/style.css" />" rel="stylesheet">
         <link href="<c:url value="/resources/bootstrap.min.css" />" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="<c:url value="/resources/js/main.js" />"></script>
+        <script src="<c:url value="/resources/js/LoadData.js" />"></script>
+
+             <script type = "text/javascript" language = "javascript">
+                $(document).ready(function() {
+                   $("#driver").click(function(event){
+
+                      $.getJSON('result.json', function(jd) {
+                         $('#stage').html('<p> Name: ' + jd.name + '</p>');
+                         $('#stage').append('<p>Age : ' + jd.age+ '</p>');
+                         $('#stage').append('<p> Sex: ' + jd.sex+ '</p>');
+                      });
+
+                   });
+                });
+             </script>
     </head>
 
 <div class = "headerbar">
@@ -20,6 +37,7 @@
 
 <c:set var="username" scope = "session" value="${pageContext.request.userPrincipal.name}"/>
 <c:url value="home/buyStock" var="buyStock" />
+<c:url value="home/sellStock" var="sellStock" />
 <body>
 
 <hr>
@@ -44,7 +62,7 @@
                                        <td >${stockItem.price}</td>
                                        <td >${stockJson.publicationDate}</td>
                                        <td>
-                                           <a href="${buyStock}?stockName=${stockItem.name}&stockBuyPrice=${stockItem.price}">Buy</a>
+                                           <a href="${buyStock}?stockName=${stockItem.name}&stockBuyPrice=${stockItem.price}&stockUnit=${stockItem.unit}">Buy</a>
                                        </td>
                                </tr>
                            </c:forEach>
@@ -70,7 +88,8 @@
                             <td >${walletItem.walletItemPrice}</td>
                             <td >${walletItem.walletItemAmount}</td>
                             <td >${walletItem.walletItemValue}</td>
-                            <td ><a href ="#">Sell</a></td>
+                            <td ><a href ="${sellStock}?walletItemId=${walletItem.walletItemId}&resourceAmount=${walletItem.walletItemValue}" class="sellConfirm">Sell</a></td>
+
 
                     </tr>
                 </c:forEach>
@@ -78,6 +97,10 @@
     </table>
 </div>
 <br />
+<a href = "#" onclick="printData()">this</a>
+<div id ="get-data"> text</div>
+
+
 
     </body>
 </html>

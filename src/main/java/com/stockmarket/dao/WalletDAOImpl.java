@@ -29,7 +29,7 @@ public class WalletDAOImpl implements WalletDAO {
         } else {
             // insert userwallet table
             String walletSql = "INSERT INTO userwallet (WALLET_ID, USER_ID, WALLET_RESOURCE)"
-                    + " VALUES (?, ?, ?)";
+                    + " VALUES (?, ?, IFNULL(?,0))";
             jdbcTemplate.update(walletSql, "w_" + user.getUserName(), user.getUserName(), wallet.getWalletResource());
 //            // insert userwallet_d table
 //            String walletDetailsSql = "INSERT INTO userwallet_d (WALLET_ID, STOCK_NAME, STOCK_AMOUNT, UNIT_PRICE)"
@@ -55,8 +55,9 @@ public class WalletDAOImpl implements WalletDAO {
     }
 
     @Override
-    public void delete(int walletId) {
-
+    public void delete(int walletItemId) {
+        String sql = "DELETE FROM userwallet_d WHERE wallet_item_id=?";
+        jdbcTemplate.update(sql, walletItemId);
     }
 
     @Override
@@ -100,4 +101,4 @@ public class WalletDAOImpl implements WalletDAO {
 
     }
 }
-// TODO in add Item instead of passing wallet Id as strong try to get w_ + username
+// TODO in add Item instead of passing wallet Id as string try to get w_ + username

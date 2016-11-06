@@ -42,11 +42,6 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public void delete(int ticketId) {
-//        String sql = "DELETE FROM tickets WHERE ID=?";
-//        jdbcTemplate.update(sql, ticketId);
-    }
-    @Override
     public User getUser(String username){
         String sql = "SELECT * FROM users u WHERE u.username ='" + username + "'";
 
@@ -59,6 +54,13 @@ public class UserDAOImpl implements UserDAO{
                         return user;
                     }
                     });
+
+    }
+    @Override
+    public int findUsername(String username){
+        String sql = "SELECT count(*) FROM users u WHERE u.username ='" + username + "'";
+
+        return jdbcTemplate.queryForObject(sql,Integer.class );
 
     }
 //    @Override
@@ -82,5 +84,3 @@ public class UserDAOImpl implements UserDAO{
 //        return listuser;
 //    }
 }
-// TODO create delete user
-// TODO add password cover
