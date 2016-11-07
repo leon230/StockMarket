@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+
 /**
  * Created by Leon on 2016-11-04.
  */
@@ -37,8 +38,21 @@ public class UserValidation implements Validator {
         if(user.getUserPass() == null || user.getUserPass().equals("")){
             errors.rejectValue("userPass", "NotEmpty.UserForm.userPass");
         }
+        for(int i = 0; i < user.getUserName().length(); i++){
+            if((int) user.getUserName().toUpperCase().charAt(i) == 95 ||
+                    ((int) user.getUserName().toUpperCase().charAt(i) >= 65 && (int) user.getUserName().toUpperCase().charAt(i) <=90) ||
+                    ((int) user.getUserName().toUpperCase().charAt(i) >= 48 && (int) user.getUserName().toUpperCase().charAt(i) <=57)) {
+            }
+            else
+            {
+                errors.rejectValue("userName", "InvalidCharacters.UserForm.userName");
+            }
+            }
+        }
+//65-90
+        //  48-57
+        //95
 
 
-    }
 }
 // TODO add password confirmaion
