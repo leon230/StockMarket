@@ -145,11 +145,9 @@ public class MarketController {
     /**
      * Retrieves loged user
      */
-    public String setUser(){
+    public static String setUser(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth.getName(); //get logged in username
-
-
     }
     @RequestMapping(value = "/home/json", method = RequestMethod.GET)
     public ModelAndView newUser(ModelAndView model) {

@@ -18,7 +18,7 @@
 <body>
 	<div class="container">
 		<h1>User details</h1>
-		<form:form action="saveUser" method="post" modelAttribute="UserForm">
+		<form:form action="saveUser?formType=${formType}" method="post" modelAttribute="UserForm">
 		<form:errors path="*" class="errorblock" element="div"/>
 
             <form:hidden path="wallet.walletId"/>
@@ -50,11 +50,11 @@
 
 			<spring:bind path="wallet.walletResource">
             <div class="form-group">
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Wallet resources</label>
-                <div class="col-sm-10">
-                    <form:input path="wallet.walletResource" type="text" class="form-control" id="wallet.walletResource" placeholder="Wallet Resources (PLN)" />
-                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Wallet resources</label>
+                    <div class="col-sm-10">
+                        <form:input path="wallet.walletResource" type="text" class="form-control" id="wallet.walletResource" placeholder="Wallet Resources (PLN)" />
+                    </div>
             </div>
             </spring:bind>
 

@@ -4,12 +4,9 @@ import com.stockmarket.dao.UserDAO;
 import com.stockmarket.dao.WalletDAO;
 import com.stockmarket.model.User;
 import com.stockmarket.model.Wallet;
+import com.stockmarket.model.WalletItem;
 import com.stockmarket.validation.UserValidation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -18,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lukasz.homik on 2016-11-04.
@@ -37,6 +36,14 @@ public class UserController {
     public void initBinder(WebDataBinder binder){
         binder.setValidator(userValidation);
     }
+
+//    private static User loggedUser = new User();
+//    static {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        loggedUser.setUserName(auth.getName()); //get logged in username
+//    }
+
+
     /**
      * Security mapping
      */
@@ -48,7 +55,6 @@ public class UserController {
         if (error != null) {
             model.addObject("error", "Invalid username and password!");
         }
-
         if (logout != null) {
             model.addObject("msg", "You've been logged out successfully.");
         }
@@ -56,10 +62,9 @@ public class UserController {
 
         return model;
     }
-
-    /**
-     * User registration
-     */
+/**
+ * User registration
+ */
     @RequestMapping(value = "/newUser", method = RequestMethod.GET)
     public ModelAndView newUser(ModelAndView model) {
         User newUser = new User();
@@ -74,7 +79,8 @@ public class UserController {
     }
     @RequestMapping(value = "**/saveUser", method = RequestMethod.POST)
     public ModelAndView CheckForm(@ModelAttribute("UserForm") @Validated User user, BindingResult result
-            , ModelAndView model) {
+            , ModelAndView model,HttpServletRequest request) {
+        String formType = request.getParameter("formType");
         if (result.hasErrors()) {
             model.setViewName("UserForm");
             return model;
@@ -82,7 +88,12 @@ public class UserController {
         else {
             userDAO.insertOrUpdate(user);
             walletDAO.insertOrUpdate(user.getWallet(), user);
-            return new ModelAndView("redirect:/");
+            if(user.getUserId() > 0) {
+                return new ModelAndView("redirect:/");
+            }
+            else {
+                return new ModelAndView("redirect:/home/InitialWallet");
+            }
         }
     }
 /**
@@ -92,6 +103,7 @@ public class UserController {
     public ModelAndView editUser(HttpServletRequest request) {
         String username = request.getParameter("username");
 
+
         User editedUser = userDAO.getUser(username);
         editedUser.setWallet(walletDAO.getWallet(username));
         ModelAndView model = new ModelAndView("UserForm");
@@ -100,26 +112,46 @@ public class UserController {
 //
         return model;
     }
-    /**for 403 access denied page
-     *
+    /**
+     * Initial wallet
      */
-    @RequestMapping(value = "/403", method = RequestMethod.GET)
-    public ModelAndView accesssDenied() {
+    @RequestMapping(value = "/home/InitialWallet", method = RequestMethod.GET)
+    public ModelAndView initialWallet(HttpServletRequest request) {
+        String username = request.getParameter("username");
 
-        ModelAndView model = new ModelAndView();
+        Wallet wallet = new Wallet();
+        WalletItem walletItem = new WalletItem();
+        List<WalletItem> walletItemList = new ArrayList<>();
 
-        //check if user is login
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (!(auth instanceof AnonymousAuthenticationToken)) {
-            UserDetails userDetail = (UserDetails) auth.getPrincipal();
+        walletItem.setWalletItemAmount(0);
+        walletItem.setWalletItemPrice(10.5);
+        walletItem.setWalletItemStockName("Future Processing");
+        walletItem.setWalletItemId("10");
+        walletItem.setWalletItemValue(10);
 
-            model.addObject("username", userDetail.getUsername());
+        wallet.setWalletId("01");
+        walletItemList.add(walletItem);
+        wallet.setWalletStockList(walletItemList);
 
+
+        ModelAndView model = new ModelAndView("InitialWallet");
+        model.addObject("InitialWallet", wallet);
+//
+        return model;
+    }
+    @RequestMapping(value = "**/saveInitialWallet", method = RequestMethod.POST)
+    public ModelAndView saveInitialWallet(@ModelAttribute("InitialWallet") Wallet wallet) {
+
+        List<WalletItem> walletItems = wallet.getWalletStockList();
+
+        if(null != walletItems && walletItems.size() > 0) {
+//            UserController.contacts = contacts;
+            for (WalletItem walletItem : walletItems) {
+                walletDAO.addItem(walletItem, walletDAO.getWallet(MarketController.setUser()).getWalletId());
+            }
         }
 
-        model.setViewName("403");
-        return model;
-
+        return new ModelAndView("redirect:/");
     }
 
 }
@@ -127,3 +159,4 @@ public class UserController {
 // TODO add stock choose possibility
 //TODO add ./ home redirection to fix double edit
 //TODO change ifnull query for wallet resource to check in java
+//TODO why do we need /home in address?
