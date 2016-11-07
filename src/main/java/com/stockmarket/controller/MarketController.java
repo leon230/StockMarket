@@ -11,8 +11,6 @@ import com.stockmarket.model.WalletItem;
 import com.stockmarket.utils.ReadFromServer;
 import com.stockmarket.validation.WalletItemValidation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -58,8 +56,8 @@ public class MarketController {
 
         Wallet wallet = new Wallet();
         User user = new User();
-        user = userDAO.getUser(this.setUser());
-        wallet = walletDAO.getWallet(this.setUser());
+        user = userDAO.getUser(UserController.setUser());
+        wallet = walletDAO.getWallet(UserController.setUser());
         wallet.setWalletStockList(walletDAO.getWalletItems(wallet.getWalletId()));
 
         Stock stockJson = new Stock();
@@ -88,7 +86,7 @@ public class MarketController {
         Wallet wallet = new Wallet();
         WalletItem walletItem = new WalletItem();
 
-        wallet = walletDAO.getWallet(this.setUser());
+        wallet = walletDAO.getWallet(UserController.setUser());
 
         walletItem.setWalletItemStockName(stockName);
         walletItem.setWalletItemPrice(stockBuyPrice);
@@ -116,7 +114,7 @@ public class MarketController {
         }
         else {
             Wallet wallet = new Wallet();
-            wallet = walletDAO.getWallet(this.setUser());
+            wallet = walletDAO.getWallet(UserController.setUser());
             walletDAO.addItem(walletItem, wallet.getWalletId());
             walletDAO.updateResources(wallet.getWalletId(), wallet.getWalletResource() - (walletItem.getWalletItemAmount()*walletItem.getWalletItemPrice()));
             stockDAO.updateAmountAvailable(walletItem.getWalletItemStockName(), walletItem.getWalletItemAmount(), "Buy");
@@ -135,7 +133,7 @@ public class MarketController {
         String stockName = request.getParameter("stockName");
 
         Wallet wallet = new Wallet();
-        wallet = walletDAO.getWallet(this.setUser());
+        wallet = walletDAO.getWallet(UserController.setUser());
 
         walletDAO.delete(walletItemId);
         walletDAO.updateResources(wallet.getWalletId(), wallet.getWalletResource() + resourceAmount);
@@ -145,10 +143,7 @@ public class MarketController {
     /**
      * Retrieves loged user
      */
-    public static String setUser(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return auth.getName(); //get logged in username
-    }
+
     @RequestMapping(value = "/home/json", method = RequestMethod.GET)
     public ModelAndView newUser(ModelAndView model) {
         model.setViewName("json");

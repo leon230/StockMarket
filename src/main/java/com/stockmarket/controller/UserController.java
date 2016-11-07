@@ -7,6 +7,8 @@ import com.stockmarket.model.Wallet;
 import com.stockmarket.model.WalletItem;
 import com.stockmarket.validation.UserValidation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -147,11 +149,15 @@ public class UserController {
         if(null != walletItems && walletItems.size() > 0) {
 //            UserController.contacts = contacts;
             for (WalletItem walletItem : walletItems) {
-                walletDAO.addItem(walletItem, walletDAO.getWallet(MarketController.setUser()).getWalletId());
+                walletDAO.addItem(walletItem, walletDAO.getWallet(setUser()).getWalletId());
             }
         }
 
         return new ModelAndView("redirect:/");
+    }
+    public static String setUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getName(); //get logged in username
     }
 
 }
