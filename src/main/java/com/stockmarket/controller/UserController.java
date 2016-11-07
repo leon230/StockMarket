@@ -1,7 +1,9 @@
 package com.stockmarket.controller;
 
+import com.stockmarket.dao.StockDAO;
 import com.stockmarket.dao.UserDAO;
 import com.stockmarket.dao.WalletDAO;
+import com.stockmarket.model.StockItem;
 import com.stockmarket.model.User;
 import com.stockmarket.model.Wallet;
 import com.stockmarket.model.WalletItem;
@@ -30,6 +32,8 @@ public class UserController {
     private UserDAO userDAO;
     @Autowired
     WalletDAO walletDAO;
+    @Autowired
+    StockDAO stockDAO;
     @Autowired
     UserValidation userValidation;
 
@@ -122,17 +126,18 @@ public class UserController {
         String username = request.getParameter("username");
 
         Wallet wallet = new Wallet();
-        WalletItem walletItem = new WalletItem();
+
         List<WalletItem> walletItemList = new ArrayList<>();
 
-        walletItem.setWalletItemAmount(0);
-        walletItem.setWalletItemPrice(10.5);
-        walletItem.setWalletItemStockName("Future Processing");
-        walletItem.setWalletItemId("10");
-        walletItem.setWalletItemValue(10);
+        for (StockItem stockItem: stockDAO.getStockList()
+             ) {
+                WalletItem walletItem = new WalletItem();
+                walletItem.setWalletItemAmount(0);
+                walletItem.setWalletItemPrice(0);
+                walletItem.setWalletItemStockName(stockItem.getName());
+                walletItemList.add(walletItem);
+        }
 
-        wallet.setWalletId("01");
-        walletItemList.add(walletItem);
         wallet.setWalletStockList(walletItemList);
 
 
@@ -146,13 +151,10 @@ public class UserController {
 
         List<WalletItem> walletItems = wallet.getWalletStockList();
 
-        if(null != walletItems && walletItems.size() > 0) {
-//            UserController.contacts = contacts;
             for (WalletItem walletItem : walletItems) {
+                if(walletItem.getWalletItemPrice() != 0 && walletItem.getWalletItemAmount() != 0)
                 walletDAO.addItem(walletItem, walletDAO.getWallet(setUser()).getWalletId());
             }
-        }
-
         return new ModelAndView("redirect:/");
     }
     public static String setUser(){

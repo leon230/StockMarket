@@ -2,7 +2,6 @@ package com.stockmarket.validation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stockmarket.dao.StockDAO;
-import com.stockmarket.dao.WalletDAO;
 import com.stockmarket.model.Stock;
 import com.stockmarket.model.StockItem;
 import com.stockmarket.model.WalletItem;
@@ -22,10 +21,6 @@ public class WalletItemValidation implements Validator {
     
     @Autowired
     StockDAO stockDAO;
-    @Autowired
-    WalletDAO walletDAO;
-
-
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -44,9 +39,6 @@ public class WalletItemValidation implements Validator {
             e.printStackTrace();
         }
 
-//        if(walletItem.getWalletItemAmount() == 0){
-//            errors.rejectValue("walletItemAmount", "NotEmpty.StockForm.walletItemAmount");
-//        }
         if(walletItem.getWalletItemAmount() > stockDAO.getAmountAvailable(walletItem.getWalletItemStockName())){
             errors.rejectValue("walletItemAmount", "NoStockAmount.StockForm.walletItemAmount");
         }
@@ -64,4 +56,4 @@ public class WalletItemValidation implements Validator {
 
     }
 }
-//TODO fuckup jak null w amount
+//TODO add CSS to initial wallet

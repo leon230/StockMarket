@@ -153,4 +153,3 @@ public class MarketController {
 
 }
 // TODO parameters to another form using java
-// TODO add initial stock values

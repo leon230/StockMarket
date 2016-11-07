@@ -31,7 +31,7 @@
     <h1> Please define your initial wallet</h1>
     <form:form method="post" action="saveInitialWallet" modelAttribute="InitialWallet">
     <form:errors path="*" class="errorblock" element="div"/>
-        <table>
+        <table class = "mainTable">
         <tr>
     <th>No.</th>
     <th>Company</th>
