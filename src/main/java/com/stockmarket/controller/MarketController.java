@@ -61,9 +61,16 @@ public class MarketController {
         wallet.setWalletStockList(walletDAO.getWalletItems(wallet.getWalletId()));
 
         Stock stockJson = new Stock();
-        String jsonData = ReadFromServer.getJSON();
-        ObjectMapper mapper = new ObjectMapper();
-        stockJson = mapper.readValue(jsonData, Stock.class);
+        try {
+            String jsonData = ReadFromServer.getJSON();
+            ObjectMapper mapper = new ObjectMapper();
+            stockJson = mapper.readValue(jsonData, Stock.class);
+            model.addObject("connectionErrorMsg",null);
+        }
+        catch (RuntimeException e){
+            model.addObject("connectionErrorMsg","No connection to stock server...");
+        }
+
         user.setWallet(wallet);
 
         model.addObject("walletId",wallet.getWalletId());

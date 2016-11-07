@@ -39,36 +39,35 @@
 <c:url value="/buyStock" var="buyStock" />
 <c:url value="/sellStock" var="sellStock" />
 <body>
-
+<div id= "connectionError">${connectionErrorMsg}</div>
 <hr>
-<a href="home/json">Buy</a>
 <div class="wrapper">
+<c:if test="${empty connectionErrorMsg}">
         <table class="mainTable">
-                <thead>
-                    <th>name</th>
-                    <th>code</th>
-                    <th>unit</th>
-                    <th>price</th>
-                    <th>publicationDate</th>
-                    <th>Action</th>
-                </thead>
-               <tbody>
-
-                           <c:forEach var="stockItem" items="${stockJson.items}">
-                              <tr>
-                                       <td >${stockItem.name}</td>
-                                       <td >${stockItem.code}</td>
-                                       <td >${stockItem.unit}</td>
-                                       <td >${stockItem.price}</td>
-                                       <td >${stockJson.publicationDate}</td>
-                                       <td>
-                                           <a href="${buyStock}?stockName=${stockItem.name}&stockBuyPrice=${stockItem.price}&stockUnit=${stockItem.unit}">Buy</a>
-                                       </td>
-                               </tr>
-                           </c:forEach>
-                       </tbody>
-                   </table>
-
+            <thead>
+                <th>name</th>
+                <th>code</th>
+                <th>unit</th>
+                <th>price</th>
+                <th>publicationDate</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+               <c:forEach var="stockItem" items="${stockJson.items}">
+                  <tr>
+                           <td >${stockItem.name}</td>
+                           <td >${stockItem.code}</td>
+                           <td >${stockItem.unit}</td>
+                           <td >${stockItem.price}</td>
+                           <td >${stockJson.publicationDate}</td>
+                           <td>
+                               <a href="${buyStock}?stockName=${stockItem.name}&stockBuyPrice=${stockItem.price}&stockUnit=${stockItem.unit}">Buy</a>
+                           </td>
+                   </tr>
+               </c:forEach>
+            </tbody>
+       </table>
+</c:if>
     <br />
 <c:set var="itemValue" value="${walletItem.walletItemAmount * walletItem.walletItemPrice}"/>
     <a>Wallet resources: ${walletResources}</a>
@@ -97,8 +96,8 @@
     </table>
 </div>
 <br />
-<a href = "#" onclick="printData()">this</a>
-<div id ="get-data"> text</div>
+
+<div id ="fpData"></div>
 
 
 
