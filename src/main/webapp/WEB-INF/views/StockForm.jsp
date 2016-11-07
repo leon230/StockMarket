@@ -13,6 +13,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
             <script src="<c:url value="/resources/js/main.js" />"></script>
             <script src="<c:url value="/resources/js/LoadData.js" />"></script>
+            <script src="<c:url value="/resources/js/FormValidation.js" />"></script>
 
     <title>Buy Stock</title>
 </head>
@@ -21,13 +22,11 @@
 <body>
 	<div class="container">
         <h1>Stock details</h1>
-            <form:form name="StockForm" action="addStock?walletId=${walletId}" method="post" modelAttribute="StockForm">
-            <form:errors path="*" class="errorblock" element="div"/>
-
+            <form:form name="StockForm" action="addStock?walletId=${walletId}" method="post" modelAttribute="StockForm" onsubmit="return validateForm()">
 
                 <spring:bind path="walletItemStockName">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Stock name</label>
+                        <label class="col-sm-10 control-label">Stock name</label>
                         <div class="col-sm-10">
                             <form:input  path="walletItemStockName" type="text" class="form-control " id="walletItemStockName" placeholder="Stock name" readonly="true" />
                         </div>
@@ -35,22 +34,22 @@
                 </spring:bind>
 
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">Stock unit</label>
+                    <label class="col-sm-10 control-label">Stock unit</label>
                     <div class="col-sm-10">
-                        <input  type="text" class="form-control " id="stockUnit" value="${stockUnit}" readonly="true" />
+                        <input  type="text" class="form-control " id="stockUnit" value="${stockUnit}" readonly="true"  />
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">Available Stock amount</label>
+                    <label class="col-sm-10 control-label">Available Stock amount</label>
                     <div class="col-sm-10">
-                        <input  type="text" class="form-control " id="stockUnit" value="${stockAmount}" readonly="true" />
+                        <input  type="text" class="form-control " id="stockAmount" value="${stockAmount}" readonly="true" />
                     </div>
                 </div>
                 <spring:bind path="walletItemPrice">
                     <div class="form-group">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Unit price</label>
+                        <label class="col-sm-10 control-label">Unit price</label>
                         <div class="col-sm-10">
                             <form:input path="walletItemPrice" type="test" class="form-control " id="walletItemPrice" placeholder="Item Price" readonly="true" />
                             <form:errors path="walletItemPrice" class="control-label" />
@@ -61,19 +60,20 @@
 
                 <spring:bind path="walletItemAmount">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">Amount</label>
+                    <label class="col-sm-10 control-label">Amount</label>
                     <div class="col-sm-10">
                         <form:input  path="walletItemAmount" type="text" class="form-control " id="walletItemAmount" placeholder="Amount" />
                         <form:errors path="walletItemAmount" class="control-label" />
+                        <div id="errorblockAmount" class="control-label"></div>
                     </div>
                 </div>
                 </spring:bind>
 
 
-            <br />
+
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <input type="submit" value="Submit" class = "buyConfirm" onclick="validateForm()">
+                <div class="col-sm-10">
+                    <input type="submit" value="Submit" class = "buyConfirm" >
                     <a href="./"> Cancel </a>
                 </div>
             </div>

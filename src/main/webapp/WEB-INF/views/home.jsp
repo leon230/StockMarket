@@ -88,7 +88,7 @@
                             <td >${walletItem.walletItemPrice}</td>
                             <td >${walletItem.walletItemAmount}</td>
                             <td >${walletItem.walletItemValue}</td>
-                            <td ><a href ="${sellStock}?walletItemId=${walletItem.walletItemId}&resourceAmount=${walletItem.walletItemValue}" class="sellConfirm">Sell</a></td>
+                            <td ><a href ="${sellStock}?walletItemId=${walletItem.walletItemId}&resourceAmount=${walletItem.walletItemValue}&stockAmount=${walletItem.walletItemAmount}&stockName=${walletItem.walletItemStockName}" class="sellConfirm">Sell</a></td>
 
 
                     </tr>

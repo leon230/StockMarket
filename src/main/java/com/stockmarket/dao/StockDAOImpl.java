@@ -19,4 +19,17 @@ public class StockDAOImpl implements StockDAO  {
 
         return jdbcTemplate.queryForObject(sql,Integer.class );
     }
+
+    @Override
+    public void updateAmountAvailable(String stockName, int stockAmount, String operationType) {
+        String updateSql;
+        if(operationType.equals("Buy")){
+            updateSql = "UPDATE stock_initial SET stock_amount=stock_amount - ? WHERE stock_name=?";
+        }
+        else{
+            updateSql = "UPDATE stock_initial SET stock_amount=stock_amount + ? WHERE stock_name=?";
+        }
+
+        jdbcTemplate.update(updateSql, stockAmount, stockName);
+    }
 }

@@ -8,11 +8,7 @@ function printData(){
     txt = document.createTextNode("your cool text");
     span.innerText = txt.textContent;
 }
-function validateForm() {
-    var x = document.getElementById("walletItemAmount");
 
-    alert("hh");
-}
 
 
 //$(document).ready(function () {

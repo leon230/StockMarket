@@ -5,4 +5,5 @@ package com.stockmarket.dao;
  */
 public interface StockDAO {
     public int getAmountAvailable(String stockName);
+    public void updateAmountAvailable(String stockName, int stockAmount, String operationType);
 }

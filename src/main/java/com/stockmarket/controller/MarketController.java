@@ -108,6 +108,9 @@ public class MarketController {
     public ModelAndView CheckForm(HttpServletRequest request, @ModelAttribute("StockForm") @Validated WalletItem walletItem, BindingResult result
             , ModelAndView model) {
         if (result.hasErrors()) {
+
+
+            model.addObject("stockAmount", stockDAO.getAmountAvailable(walletItem.getWalletItemStockName()));
             model.setViewName("StockForm");
             return model;
         }
@@ -116,6 +119,7 @@ public class MarketController {
             wallet = walletDAO.getWallet(this.setUser());
             walletDAO.addItem(walletItem, wallet.getWalletId());
             walletDAO.updateResources(wallet.getWalletId(), wallet.getWalletResource() - (walletItem.getWalletItemAmount()*walletItem.getWalletItemPrice()));
+            stockDAO.updateAmountAvailable(walletItem.getWalletItemStockName(), walletItem.getWalletItemAmount(), "Buy");
 
         return new ModelAndView("redirect:/");
         }
@@ -126,13 +130,16 @@ public class MarketController {
     @RequestMapping(value = "home/sellStock", method = RequestMethod.GET)
     public ModelAndView sellStock(HttpServletRequest request) {
         int walletItemId = Integer.parseInt(request.getParameter("walletItemId"));
+        int stockAmount = Integer.parseInt(request.getParameter("stockAmount"));
         double resourceAmount = Double.parseDouble(request.getParameter("resourceAmount"));
+        String stockName = request.getParameter("stockName");
+
         Wallet wallet = new Wallet();
         wallet = walletDAO.getWallet(this.setUser());
 
         walletDAO.delete(walletItemId);
         walletDAO.updateResources(wallet.getWalletId(), wallet.getWalletResource() + resourceAmount);
-
+        stockDAO.updateAmountAvailable(stockName, stockAmount, "Sell");
         return new ModelAndView("redirect:/");
     }
     /**
