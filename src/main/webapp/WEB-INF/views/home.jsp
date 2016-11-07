@@ -36,8 +36,8 @@
 </div>
 
 <c:set var="username" scope = "session" value="${pageContext.request.userPrincipal.name}"/>
-<c:url value="home/buyStock" var="buyStock" />
-<c:url value="home/sellStock" var="sellStock" />
+<c:url value="/buyStock" var="buyStock" />
+<c:url value="/sellStock" var="sellStock" />
 <body>
 
 <hr>

@@ -2,6 +2,7 @@ package com.stockmarket.validation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stockmarket.dao.StockDAO;
+import com.stockmarket.dao.WalletDAO;
 import com.stockmarket.model.Stock;
 import com.stockmarket.model.StockItem;
 import com.stockmarket.model.WalletItem;
@@ -21,6 +22,8 @@ public class WalletItemValidation implements Validator {
     
     @Autowired
     StockDAO stockDAO;
+    @Autowired
+    WalletDAO walletDAO;
 
 
 

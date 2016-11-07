@@ -57,6 +57,12 @@
                     </div>
                 </spring:bind>
 
+                <div class="form-group">
+                    <label class="col-sm-10 control-label">Wallet resources</label>
+                    <div class="col-sm-10">
+                        <input  type="text" class="form-control " id="walletResources" value="${walletResources}" readonly="true" />
+                    </div>
+                </div>
 
                 <spring:bind path="walletItemAmount">
                 <div class="form-group">

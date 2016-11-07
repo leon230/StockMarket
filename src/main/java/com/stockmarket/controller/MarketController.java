@@ -77,7 +77,7 @@ public class MarketController {
     /**
      * Buy Stock form
      */
-    @RequestMapping(value = "/home/buyStock", method = RequestMethod.GET)
+    @RequestMapping(value = "**/buyStock", method = RequestMethod.GET)
     public ModelAndView newUser(ModelAndView model, HttpServletRequest request) {
         String stockName = request.getParameter("stockName");
         double stockBuyPrice = Double.parseDouble(request.getParameter("stockBuyPrice"));
@@ -94,6 +94,7 @@ public class MarketController {
 
 
         model.addObject("walletId", wallet.getWalletId());
+        model.addObject("walletResources", wallet.getWalletResource());
         model.addObject("StockForm", walletItem);
         model.addObject("stockUnit", stockUnit);
         model.addObject("stockAmount", stockDAO.getAmountAvailable(stockName));
@@ -102,7 +103,7 @@ public class MarketController {
         return model;
     }
 
-    @RequestMapping(value = "home/addStock", method = RequestMethod.POST)
+    @RequestMapping(value = "**/addStock", method = RequestMethod.POST)
     public ModelAndView CheckForm(HttpServletRequest request, @ModelAttribute("StockForm") @Validated WalletItem walletItem, BindingResult result
             , ModelAndView model) {
         if (result.hasErrors()) {
@@ -125,7 +126,7 @@ public class MarketController {
 /**
  * Sell stock mapping
  */
-    @RequestMapping(value = "home/sellStock", method = RequestMethod.GET)
+    @RequestMapping(value = "**/sellStock", method = RequestMethod.GET)
     public ModelAndView sellStock(HttpServletRequest request) {
         int walletItemId = Integer.parseInt(request.getParameter("walletItemId"));
         int stockAmount = Integer.parseInt(request.getParameter("stockAmount"));
