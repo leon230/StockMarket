@@ -11,7 +11,7 @@
              }
          if(stockAmount.value > stockAvailable.value){
             span = document.getElementById("errorblockAmount");
-            txt = document.createTextNode("Incorrect amount. Must be less than available stock amount");
+            txt = document.createTextNode("Incorrect amount. Must be less than or equal to available stock amount");
             span.innerText = txt.textContent;
             return false;
          }
