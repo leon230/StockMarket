@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 /**
  * Created by lukasz.homik on 2016-11-04.
@@ -73,10 +76,11 @@ public class MarketController {
 //        catch (RuntimeException e){
 //            model.addObject("connectionErrorMsg","No connection to stock server...");
 //        }
-
+        NumberFormat formatter;
+        formatter = new DecimalFormat("0000.000");
         user.setWallet(wallet);
         model.addObject("walletId",wallet.getWalletId());
-        model.addObject("walletResources",wallet.getWalletResource());
+        model.addObject("walletResources",formatter.format(wallet.getWalletResource()));
 //        model.addObject("stockJson",stockJson);
         model.addObject("wallItems", wallet.getWalletStockList());
         model.setViewName("home");
