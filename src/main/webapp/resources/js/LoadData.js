@@ -36,7 +36,7 @@ function refreshData()
     if (items.length) {
         var d = new Date(data.publicationDate);
         var arr = ["Company name", "Company code", "Unit","Price","Action"];
-        var resultstring='<p>' + d.getFullYear() + '-' + month[d.getMonth()]  + '-' + d.getDate() + '     ' + d.getHours()  + ':' +
+        var resultstring='<p>Stock refresh time: ' + d.getFullYear() + '-' + month[d.getMonth()]  + '-' + d.getDate() + '     ' + d.getHours()  + ':' +
         d.getMinutes() + ':' + d.getSeconds()     +'</p>'+ '<table class = "mainTable">';
 
         for(var j=0;j<arr.length;j++){
@@ -53,4 +53,4 @@ function refreshData()
    }
 });
 }
-setInterval(refreshData, 1000);
+setInterval(refreshData, 15000);

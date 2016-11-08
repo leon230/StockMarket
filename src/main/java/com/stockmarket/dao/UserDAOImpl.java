@@ -63,24 +63,4 @@ public class UserDAOImpl implements UserDAO{
         return jdbcTemplate.queryForObject(sql,Integer.class );
 
     }
-//    @Override
-//    public List<User> listuser(String userName) {
-//        String sql = "SELECT * FROM users u, user_roles ur WHERE u.username = ur.username AND u.username ='" + userName + "'";
-//        List<User> listuser = jdbcTemplate.query(sql, new RowMapper<User>() {
-//
-//            @Override
-//            public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-//                User user = new User();
-//                user.setUserId(rs.getInt("ID"));
-//                user.setUserName(rs.getString("username"));
-//                user.setUserPass(rs.getString("password"));
-//                user.setUserRole(rs.getString("role"));
-//
-//                return user;
-//            }
-//
-//        });
-//
-//        return listuser;
-//    }
 }

@@ -41,7 +41,7 @@
         <c:forEach items="${InitialWallet.walletStockList}" var="contact" varStatus="status">
             <tr>
                 <td align="center">${status.count}</td>
-                <td><input name="walletStockList[${status.index}].walletItemStockName" value="${contact.walletItemStockName}"/></td>
+                <td><input name="walletStockList[${status.index}].walletItemStockName" value="${contact.walletItemStockName}" readonly="true" /></td>
                 <td><input name="walletStockList[${status.index}].walletItemAmount" value="${contact.walletItemAmount}"/></td>
                 <td><input name="walletStockList[${status.index}].walletItemPrice" value="${contact.walletItemPrice}"/></td>
             </tr>

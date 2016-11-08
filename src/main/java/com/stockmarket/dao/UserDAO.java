@@ -6,8 +6,7 @@ import com.stockmarket.model.User;
  */
 public interface UserDAO {
 
-    public void insertOrUpdate(User user);
-    public User getUser(String username);
-    public int findUsername(String username);
-//    public List<User> listuser(String userName);
+    public void insertOrUpdate(User user); //Insert or updates user
+    public User getUser(String username); //get user data
+    public int findUsername(String username); //finds only username. Used when creating new user
 }

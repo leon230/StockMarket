@@ -22,7 +22,7 @@
 <body>
 	<div class="container">
         <h1>Stock details</h1>
-            <form:form name="StockForm" action="addStock?walletId=${walletId}" method="post" modelAttribute="StockForm" onsubmit="return validateForm()">
+            <form:form name="StockForm" action="addStock?walletId=${walletId}" method="post" modelAttribute="StockForm" onsubmit="return validateStockForm()">
 
                 <spring:bind path="walletItemStockName">
                     <div class="form-group">

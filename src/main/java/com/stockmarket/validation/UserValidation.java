@@ -46,8 +46,12 @@ public class UserValidation implements Validator {
             else
             {
                 errors.rejectValue("userName", "InvalidCharacters.UserForm.userName");
+                break;
             }
             }
+
+
+
         }
 //65-90
         //  48-57

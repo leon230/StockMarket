@@ -17,7 +17,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,14 +41,6 @@ public class UserController {
     public void initBinder(WebDataBinder binder){
         binder.setValidator(userValidation);
     }
-
-//    private static User loggedUser = new User();
-//    static {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        loggedUser.setUserName(auth.getName()); //get logged in username
-//    }
-
-
     /**
      * Security mapping
      */
@@ -69,7 +60,7 @@ public class UserController {
         return model;
     }
 /**
- * User registration
+ * User registration form mapping
  */
     @RequestMapping(value = "/newUser", method = RequestMethod.GET)
     public ModelAndView newUser(ModelAndView model) {
@@ -83,17 +74,22 @@ public class UserController {
 
         return model;
     }
+
+    /**
+     * Mapping for user creation submit button
+     */
     @RequestMapping(value = "**/saveUser", method = RequestMethod.POST)
     public ModelAndView CheckForm(@ModelAttribute("UserForm") @Validated User user, BindingResult result
             , ModelAndView model,HttpServletRequest request) {
-        String formType = request.getParameter("formType");
         if (result.hasErrors()) {
             model.setViewName("UserForm");
             return model;
         }
         else {
+            //Inserting new data to users and userwallet tables
             userDAO.insertOrUpdate(user);
             walletDAO.insertOrUpdate(user.getWallet(), user);
+            //redirect depends whether user is editing profile or creating new user
             if(user.getUserId() > 0) {
                 return new ModelAndView("redirect:/");
             }
@@ -103,19 +99,18 @@ public class UserController {
         }
     }
 /**
- * User Edit
+ * User Edit mapping.
  */
     @RequestMapping(value = "/home/editUser", method = RequestMethod.GET)
     public ModelAndView editUser(HttpServletRequest request) {
         String username = request.getParameter("username");
+        User editedUser = userDAO.getUser(username); //Retrieving username
+        editedUser.setWallet(walletDAO.getWallet(username)); //setting up wallet
 
-
-        User editedUser = userDAO.getUser(username);
-        editedUser.setWallet(walletDAO.getWallet(username));
         ModelAndView model = new ModelAndView("UserForm");
         model.addObject("formType","Edit");
         model.addObject("UserForm", editedUser);
-//
+
         return model;
     }
     /**
@@ -128,7 +123,7 @@ public class UserController {
         Wallet wallet = new Wallet();
 
         List<WalletItem> walletItemList = new ArrayList<>();
-
+        //Getting stock list from stocks table and populate data in walletStockList
         for (StockItem stockItem: stockDAO.getStockList()
              ) {
                 WalletItem walletItem = new WalletItem();
@@ -140,31 +135,30 @@ public class UserController {
 
         wallet.setWalletStockList(walletItemList);
 
-
         ModelAndView model = new ModelAndView("InitialWallet");
         model.addObject("InitialWallet", wallet);
-//
+
         return model;
     }
+
+    /**
+     *  Mapping for saving initial wallet
+     */
     @RequestMapping(value = "**/saveInitialWallet", method = RequestMethod.POST)
     public ModelAndView saveInitialWallet(@ModelAttribute("InitialWallet") Wallet wallet) {
 
         List<WalletItem> walletItems = wallet.getWalletStockList();
-
-            for (WalletItem walletItem : walletItems) {
-                if(walletItem.getWalletItemPrice() != 0 && walletItem.getWalletItemAmount() != 0)
-                walletDAO.addItem(walletItem, walletDAO.getWallet(setUser()).getWalletId());
-            }
+        //Loops wallet Items and saves only those which price and amount is not equal to 0
+        for (WalletItem walletItem : walletItems) {
+            if(walletItem.getWalletItemPrice() != 0 && walletItem.getWalletItemAmount() != 0)
+            walletDAO.addItem(walletItem, walletDAO.getWallet(setUser()).getWalletId());
+        }
         return new ModelAndView("redirect:/");
     }
+     //Retrieves loged user
     public static String setUser(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth.getName(); //get logged in username
     }
 
 }
-
-// TODO add stock choose possibility
-//TODO add ./ home redirection to fix double edit
-//TODO change ifnull query for wallet resource to check in java
-//TODO why do we need /home in address?

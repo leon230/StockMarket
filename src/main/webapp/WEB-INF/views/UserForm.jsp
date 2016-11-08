@@ -10,6 +10,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="<c:url value="/resources/bootstrap.min.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/style.css" />" rel="stylesheet">
+    <script src="<c:url value="/resources/js/FormValidation.js" />"></script>
 
     <title>New/Edit User</title>
 </head>
@@ -18,7 +19,7 @@
 <body>
 	<div class="container">
 		<h1>User details</h1>
-		<form:form action="saveUser?formType=${formType}" method="post" modelAttribute="UserForm">
+		<form:form action="saveUser?formType=${formType}" method="post" modelAttribute="UserForm" onsubmit="return validateUserForm()">
 		<form:errors path="*" class="errorblock" element="div"/>
 
             <form:hidden path="wallet.walletId"/>
@@ -28,7 +29,7 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Username</label>
 				<div class="col-sm-10">
-					<form:input path="userName" type="text" class="form-control " id="userName" placeholder="Username (max 50 characters)" />
+					<form:input path="userName" type="text" class="form-control " id="userName" placeholder="Username (max 50 characters, letters A-Z, numbers 0-9 and underscore sign)" />
 					<form:errors path="userName" class="control-label" />
 				</div>
 			</div>
@@ -54,6 +55,7 @@
                     <label class="col-sm-2 control-label">Wallet resources</label>
                     <div class="col-sm-10">
                         <form:input path="wallet.walletResource" type="text" class="form-control" id="wallet.walletResource" placeholder="Wallet Resources (PLN)" />
+                        <div id="errorblockResource" class="control-label"></div>
                     </div>
             </div>
             </spring:bind>
