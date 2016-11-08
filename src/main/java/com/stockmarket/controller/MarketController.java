@@ -83,11 +83,11 @@ public class MarketController {
 
         return model;
     }
-    /**
-     * Buy Stock form mapping.
-     * Mapped when user clicks Buy link stock on first table
-     * It retrieves the data from main page stock table to populate of the form.
-     */
+/**
+ * Buy Stock form mapping.
+ * Mapped when user clicks Buy link stock on first table
+ * It retrieves the data from main page stock table to populate of the form.
+ */
     @RequestMapping(value = "**/buyStock", method = RequestMethod.GET)
     public ModelAndView buyStock(ModelAndView model, HttpServletRequest request) {
 
@@ -112,10 +112,9 @@ public class MarketController {
 
         return model;
     }
-
-    /**
-     *  Mapping when user confirms to buy a stock from StockForm
-     */
+/**
+ *  Mapping when user confirms to buy a stock from StockForm
+ */
     @RequestMapping(value = "**/addStock", method = RequestMethod.POST)
     public ModelAndView addStock(HttpServletRequest request, @ModelAttribute("StockForm") @Validated WalletItem walletItem, BindingResult result
             , ModelAndView model) {

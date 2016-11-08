@@ -34,4 +34,3 @@ public class Wallet {
         this.walletStockList = walletStockList;
     }
 }
-// TODO check if Long is fine for wallet resource

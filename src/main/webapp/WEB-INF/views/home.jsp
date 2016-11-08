@@ -15,69 +15,51 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="<c:url value="/resources/js/main.js" />"></script>
         <script src="<c:url value="/resources/js/LoadData.js" />"></script>
-
-             <script type = "text/javascript" language = "javascript">
-                $(document).ready(function() {
-                   $("#driver").click(function(event){
-
-                      $.getJSON('result.json', function(jd) {
-                         $('#stage').html('<p> Name: ' + jd.name + '</p>');
-                         $('#stage').append('<p>Age : ' + jd.age+ '</p>');
-                         $('#stage').append('<p> Sex: ' + jd.sex+ '</p>');
-                      });
-
-                   });
-                });
-             </script>
     </head>
 
-<div class = "headerbar">
-    <jsp:include page="header.jsp" />
-</div>
+    <div class = "headerbar">
+        <jsp:include page="header.jsp" />
+    </div>
 
-<c:set var="username" scope = "session" value="${pageContext.request.userPrincipal.name}"/>
-<c:url value="/buyStock" var="buyStock" />
-<c:url value="/sellStock" var="sellStock" />
-<body onload="refreshData()">
-<div id= "connectionError">${connectionErrorMsg}</div>
-<hr>
-<div class="wrapper">
-<c:if test="${empty connectionErrorMsg}">
-    <div id ="fpData"></div>
-</c:if>
+    <c:set var="username" scope = "session" value="${pageContext.request.userPrincipal.name}"/>
+    <c:url value="/buyStock" var="buyStock" />
+    <c:url value="/sellStock" var="sellStock" />
+    <body onload="refreshData()">
+    <div id= "connectionError">${connectionErrorMsg}</div>
+    <hr>
+    <div class="wrapper">
+    <c:if test="${empty connectionErrorMsg}">
+	<div class ="table1Container">
+        <div id ="fpData"></div>
+	</div>
+    </c:if>
+        <br />
+    <c:set var="itemValue" value="${walletItem.walletItemAmount * walletItem.walletItemPrice}"/>
+        <div class ="table2Container">
+        <table class="mainTable">
+                <thead>
+                    <th>Company</th>
+                    <th>Unit price</th>
+                    <th>Amount</th>
+                    <th>Value</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                    <c:forEach var="walletItem" items="${wallItems}">
+                       <tr>
+                                <td >${walletItem.walletItemStockName}</td>
+                                <td >${walletItem.walletItemPrice}</td>
+                                <td >${walletItem.walletItemAmount}</td>
+                                <td >${walletItem.walletItemValue}</td>
+                                <td ><a href ="${sellStock}?walletItemId=${walletItem.walletItemId}&resourceAmount=${walletItem.walletItemValue}&stockAmount=${walletItem.walletItemAmount}&stockName=${walletItem.walletItemStockName}" class="sellConfirm">Sell</a></td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+        </table>
+        <a>Available money: ${walletResources} PLN</a>
+        </div>
+    </div>
     <br />
-<c:set var="itemValue" value="${walletItem.walletItemAmount * walletItem.walletItemPrice}"/>
-    <a>Available money: ${walletResources} PLN</a>
-    <table class="mainTable">
-            <thead>
-                <th>Company</th>
-                <th>Unit price</th>
-                <th>Amount</th>
-                <th>Value</th>
-                <th>Action</th>
-            </thead>
-            <tbody>
-
-                <c:forEach var="walletItem" items="${wallItems}">
-                   <tr>
-                            <td >${walletItem.walletItemStockName}</td>
-                            <td >${walletItem.walletItemPrice}</td>
-                            <td >${walletItem.walletItemAmount}</td>
-                            <td >${walletItem.walletItemValue}</td>
-                            <td ><a href ="${sellStock}?walletItemId=${walletItem.walletItemId}&resourceAmount=${walletItem.walletItemValue}&stockAmount=${walletItem.walletItemAmount}&stockName=${walletItem.walletItemStockName}" class="sellConfirm">Sell</a></td>
-
-
-                    </tr>
-                </c:forEach>
-            </tbody>
-    </table>
-</div>
-<br />
-
-
-
-
-
     </body>
 </html>
 </sec:authorize>

@@ -29,32 +29,26 @@
     <hr>
     <div class="wrapper">
     <h1> Please define your initial wallet</h1>
-    <form:form method="post" action="saveInitialWallet" modelAttribute="InitialWallet">
-    <form:errors path="*" class="errorblock" element="div"/>
-        <table class = "mainTable">
-        <tr>
-    <th>No.</th>
-    <th>Company</th>
-    <th>Stock amount</th>
-    <th>Unit price</th>
-        </tr>
-        <c:forEach items="${InitialWallet.walletStockList}" var="contact" varStatus="status">
-            <tr>
-                <td align="center">${status.count}</td>
-                <td><input name="walletStockList[${status.index}].walletItemStockName" value="${contact.walletItemStockName}" readonly="true" /></td>
-                <td><input name="walletStockList[${status.index}].walletItemAmount" value="${contact.walletItemAmount}"/></td>
-                <td><input name="walletStockList[${status.index}].walletItemPrice" value="${contact.walletItemPrice}"/></td>
-            </tr>
-        </c:forEach>
-    </table>
-    <br/>
-    <input type="submit" value="Save" />
-
-    </form:form>
-
-
-
-
+        <form:form method="post" action="saveInitialWallet" modelAttribute="InitialWallet">
+            <table class = "mainTable">
+            <thead>
+                <th>No.</th>
+                <th>Company</th>
+                <th>Stock amount</th>
+                <th>Unit price</th>
+            </thead>
+            <c:forEach items="${InitialWallet.walletStockList}" var="contact" varStatus="status">
+                <tr>
+                    <td align="center">${status.count}</td>
+                    <td><input name="walletStockList[${status.index}].walletItemStockName" value="${contact.walletItemStockName}" readonly="true" /></td>
+                    <td><input name="walletStockList[${status.index}].walletItemAmount" value="${contact.walletItemAmount}"/></td>
+                    <td><input name="walletStockList[${status.index}].walletItemPrice" value="${contact.walletItemPrice}"/></td>
+                </tr>
+            </c:forEach>
+        </table>
+        <br/>
+        <input type="submit" value="Save" />
+        </form:form>
     </div>
     <br />
     </body>

@@ -3,7 +3,6 @@ package com.stockmarket.dao;
 import com.stockmarket.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,10 +16,8 @@ public class UserDAOImpl implements UserDAO{
     public UserDAOImpl(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
-
     /**
-     * UserId is hidden in the template
-     * @param user
+     * UserId is hidden in the template. It is used to recognize insert or update  action
      */
     @Override
     public void insertOrUpdate(User user) {
@@ -56,10 +53,10 @@ public class UserDAOImpl implements UserDAO{
                     });
 
     }
+    //This function returns only number of rows.
     @Override
     public int findUsername(String username){
         String sql = "SELECT count(*) FROM users u WHERE u.username ='" + username + "'";
-
         return jdbcTemplate.queryForObject(sql,Integer.class );
 
     }

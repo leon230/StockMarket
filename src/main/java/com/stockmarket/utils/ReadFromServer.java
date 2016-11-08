@@ -9,60 +9,16 @@ import java.net.URL;
 /**
  * Created by Leon on 2016-11-05.
  */
-
+/**
+ * Method used only to retrieve JSON from the server
+ * Not used due to AJAX query. query function in LoadData.js refreshData()
+ */
 public class ReadFromServer {
-
-    public static String getJ() {
-        HttpURLConnection c = null;
-        String url = "http://webtask.future-processing.com:8068/stocks";
-        int timeout = 500;
-        try {
-            URL u = new URL(url);
-            c = (HttpURLConnection) u.openConnection();
-            c.setRequestMethod("GET");
-            c.setRequestProperty("Content-length", "0");
-            c.setRequestProperty("Content-Type", "application/json");
-            c.setUseCaches(false);
-            c.setAllowUserInteraction(false);
-            c.setConnectTimeout(timeout);
-            c.setReadTimeout(timeout);
-            c.connect();
-            int status = c.getResponseCode();
-
-            switch (status) {
-                case 200:
-                case 201:
-                    BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream()));
-                    StringBuilder sb = new StringBuilder();
-                    String line;
-                    while ((line = br.readLine()) != null) {
-                        sb.append(line + "\n");
-                    }
-                    br.close();
-                    return sb.toString();
-            }
-
-        } catch (MalformedURLException ex) {
-            System.out.println(ex.toString());
-        } catch (IOException ex) {
-            System.out.println(ex.toString());
-        } finally {
-            if (c != null) {
-                try {
-                    c.disconnect();
-                } catch (Exception ex) {
-                    System.out.println(ex.toString());
-                }
-            }
-        }
-        return null;
-    }
 
     public static String getJSON() {
         try {
 
-            URL url = new URL(
-                    "http://webtask.future-processing.com:8068/stocks");
+            URL url = new URL("http://webtask.future-processing.com:8068/stocks");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
@@ -75,7 +31,7 @@ public class ReadFromServer {
                     (conn.getInputStream())));
 
             String output;
-            System.out.println("Output from Server .... \n");
+            //Server output
             while ((output = br.readLine()) != null) {
 
                 return output;
@@ -84,12 +40,9 @@ public class ReadFromServer {
             conn.disconnect();
 
         } catch (MalformedURLException e) {
-
             e.printStackTrace();
         } catch (IOException e) {
-
             e.printStackTrace();
-
         }
         return  null;
     }

@@ -42,18 +42,15 @@ public class WalletItemValidation implements Validator {
         if(walletItem.getWalletItemAmount() > stockDAO.getAmountAvailable(walletItem.getWalletItemStockName())){
             errors.rejectValue("walletItemAmount", "NoStockAmount.StockForm.walletItemAmount");
         }
-        if(1==1){
             for (StockItem stockItem: stockJson.getItems()
                  ) {
-                        if(stockItem.getName() == walletItem.getWalletItemStockName()){
-
+                        if(stockItem.getName().equals(walletItem.getWalletItemStockName())){
+                            if(stockItem.getPrice() != walletItem.getWalletItemPrice()){
+                                errors.rejectValue("walletItemPrice", "IncorrectPrice.StockForm.walletItemPrice");
+                            }
                         }
                 
             }
-        }
-
-
-
     }
 }
 //TODO add CSS to initial wallet

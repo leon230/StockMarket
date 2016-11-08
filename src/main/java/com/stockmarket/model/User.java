@@ -9,7 +9,8 @@ public class User {
     private String userPass;
     private String userRole;
     private Wallet wallet;
-
+    //Role is for spring security
+    //Role is always assigned to ROLE_USER. Application does not assume different roles
     public User(){
         this.userRole = "ROLE_USER";
     }

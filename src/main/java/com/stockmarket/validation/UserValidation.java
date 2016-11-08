@@ -25,26 +25,29 @@ public class UserValidation implements Validator {
     public void validate(Object target, Errors errors) {
         User user = (User) target;
 
-
+        //empty username validation
         if(user.getUserName() == null || user.getUserName().equals("")){
             errors.rejectValue("userName", "NotEmpty.UserForm.userName");
         }
+        //Check if user already exists
         if(!(user.getUserId() > 0) && userDAO.findUsername(user.getUserName()) > 0){
             errors.rejectValue("userName", "UserExists.UserForm.userName");
         }
+        //username length to match database requirements
         if(user.getUserName().length() > 50){
             errors.rejectValue("userName", "TooLong.UserForm.userName");
         }
+        //Check id password is not empty
         if(user.getUserPass() == null || user.getUserPass().equals("")){
             errors.rejectValue("userPass", "NotEmpty.UserForm.userPass");
         }
+        //Check if username contains forbidden characters
         for(int i = 0; i < user.getUserName().length(); i++){
             if((int) user.getUserName().toUpperCase().charAt(i) == 95 ||
                     ((int) user.getUserName().toUpperCase().charAt(i) >= 65 && (int) user.getUserName().toUpperCase().charAt(i) <=90) ||
                     ((int) user.getUserName().toUpperCase().charAt(i) >= 48 && (int) user.getUserName().toUpperCase().charAt(i) <=57)) {
             }
-            else
-            {
+            else {
                 errors.rejectValue("userName", "InvalidCharacters.UserForm.userName");
                 break;
             }
@@ -53,10 +56,4 @@ public class UserValidation implements Validator {
 
 
         }
-//65-90
-        //  48-57
-        //95
-
-
 }
-// TODO add password confirmaion

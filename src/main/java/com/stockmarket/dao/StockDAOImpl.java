@@ -48,7 +48,7 @@ public class StockDAOImpl implements StockDAO  {
                 StockItem stockItem = new StockItem();
                 stockItem.setName(rs.getString("COMPANY_NAME"));
                 stockItem.setCode("COMPANY_CODE");
-                stockItem.setPrice("0");
+                stockItem.setPrice(0);
                 stockItem.setUnit("0");
                 return stockItem;
             }

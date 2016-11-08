@@ -5,7 +5,6 @@ import com.stockmarket.model.Wallet;
 import com.stockmarket.model.WalletItem;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,11 +30,6 @@ public class WalletDAOImpl implements WalletDAO {
             String walletSql = "INSERT INTO userwallet (WALLET_ID, USER_ID, WALLET_RESOURCE)"
                     + " VALUES (?, ?, IFNULL(?,0))";
             jdbcTemplate.update(walletSql, "w_" + user.getUserName(), user.getUserName(), wallet.getWalletResource());
-//            // insert userwallet_d table
-//            String walletDetailsSql = "INSERT INTO userwallet_d (WALLET_ID, STOCK_NAME, STOCK_AMOUNT, UNIT_PRICE)"
-//                    + " VALUES (?, ?, ?, ?)";
-//            jdbcTemplate.update(walletDetailsSql, "w_" + user.getUserName(), "Future Processing (FP)", 10, 10.9);
-//            jdbcTemplate.update(walletDetailsSql, "w_" + user.getUserName(), "FP Coin (FPC)", 50, 200.8);
         }
     }
     @Override
@@ -49,9 +43,6 @@ public class WalletDAOImpl implements WalletDAO {
         String itemSql = "INSERT INTO userwallet_d (WALLET_ID, STOCK_NAME, STOCK_AMOUNT, UNIT_PRICE)"
                 + " VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(itemSql, walletId, walletItem.getWalletItemStockName(), walletItem.getWalletItemAmount(), walletItem.getWalletItemPrice());
-
-
-
     }
 
     @Override
@@ -101,4 +92,3 @@ public class WalletDAOImpl implements WalletDAO {
 
     }
 }
-// TODO in add Item instead of passing wallet Id as string try to get w_ + username

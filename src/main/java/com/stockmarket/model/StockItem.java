@@ -7,7 +7,7 @@ public class StockItem {
     private String name;
     private String code;
     private String unit;
-    private String price;
+    private double price;
 
     public String getName() {
         return name;
@@ -33,11 +33,11 @@ public class StockItem {
         this.unit = unit;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 }

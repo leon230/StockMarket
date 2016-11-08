@@ -1,23 +1,20 @@
 function refreshData()
 {$.ajax({
-  type: 'GET',
-  url: 'http://webtask.future-processing.com:8068/stocks',
-  async: true,
-  beforeSend: function (xhr) {
+    type: 'GET',
+    url: 'http://webtask.future-processing.com:8068/stocks',
+    async: true,
+    beforeSend: function (xhr) {
     if (xhr && xhr.overrideMimeType) {
       xhr.overrideMimeType('application/json;charset=utf-8');
     }
   },
-  dataType: 'json',
-  success: function (data) {
+    dataType: 'json',
+    success: function (data) {
     console.log(data);
-
-	var showData = $('#fpData');
 
     var items = data.items.map(function (item) {
         return  '<td>' + item.name + '</td><td>' + item.code  + '</td><td>' + item.unit + '</td><td>' + item.price + '</td>' + '<td><a href = "./buyStock?stockName='+ item.name+'&stockBuyPrice=' + item.price +'&stockUnit=' + item.unit +'">Buy</a></td>';
     });
-//      showData.empty();
 
     var month = new Array();
     month[0] = "01";
@@ -35,20 +32,20 @@ function refreshData()
 
     if (items.length) {
         var d = new Date(data.publicationDate);
-        var arr = ["Company name", "Company code", "Unit","Price","Action"];
-        var resultstring='<p>Stock refresh time: ' + d.getFullYear() + '-' + month[d.getMonth()]  + '-' + d.getDate() + '     ' + d.getHours()  + ':' +
-        d.getMinutes() + ':' + d.getSeconds()     +'</p>'+ '<table class = "mainTable">';
+        var columns = ["Company name", "Company code", "Unit", "Price", "Action"];
+        var resultString='<p>Stock refresh time: ' + d.getFullYear() + '-' + month[d.getMonth()]  + '-' + d.getDate() + '     ' + d.getHours()  + ':' +
+        d.getMinutes() + ':' + d.getSeconds() +'</p>'+ '<table class = "mainTable">';
 
-        for(var j=0;j<arr.length;j++){
-            resultstring+= '<th>'+ arr[j] + '</th>';
+        for(var j=0;j<columns.length;j++){
+            resultString+= '<th>'+ columns[j] + '</th>';
         }
         $(items).each(function(i, items) {
-            resultstring+='<tr>';
-            resultstring+= items;
-            resultstring+='</tr>';
+            resultString+='<tr>';
+            resultString+= items;
+            resultString+='</tr>';
         });
-        resultstring+='</table>';
-        $('#fpData').html(resultstring);
+        resultString+='</table>';
+        $('#fpData').html(resultString);
    }
    }
 });

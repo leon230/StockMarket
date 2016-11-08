@@ -50,4 +50,3 @@ public class WalletItem {
         this.walletItemValue = walletItemValue;
     }
 }
-// TODO check if integer is fine for amount value
