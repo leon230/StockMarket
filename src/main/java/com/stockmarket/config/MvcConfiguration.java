@@ -26,6 +26,8 @@ import javax.sql.DataSource;
 @Import({ WebSecurityConfig.class })
 public class MvcConfiguration extends WebMvcConfigurerAdapter{
 
+    public static String databaseSchema = "awsstock";
+//    public static String databaseSchema = "fpstock";
     @Bean
     public ViewResolver getViewResolver(){
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -49,9 +51,12 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter{
     public DataSource getDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/fpstock");
-        dataSource.setUsername("root");
-        dataSource.setPassword("");
+//        dataSource.setUrl("jdbc:mysql://localhost:3306/"+databaseSchema);
+//        dataSource.setUsername("root");
+//        dataSource.setPassword("");
+        dataSource.setUrl("jdbc:mysql://" + databaseSchema + ".ciao4vitmcqb.us-west-2.rds.amazonaws.com");
+        dataSource.setUsername("admin");
+        dataSource.setPassword("admin123");
 
         return dataSource;
     }

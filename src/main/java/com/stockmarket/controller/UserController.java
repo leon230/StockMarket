@@ -101,7 +101,7 @@ public class UserController {
 /**
  * User Edit mapping.
  */
-    @RequestMapping(value = "/home/editUser", method = RequestMethod.GET)
+    @RequestMapping(value = "**/editUser", method = RequestMethod.GET)
     public ModelAndView editUser(HttpServletRequest request) {
         String username = request.getParameter("username");
         User editedUser = userDAO.getUser(username); //Retrieving username

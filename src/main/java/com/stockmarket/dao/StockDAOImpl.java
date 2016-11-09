@@ -1,5 +1,6 @@
 package com.stockmarket.dao;
 
+import com.stockmarket.config.MvcConfiguration;
 import com.stockmarket.model.StockItem;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -20,7 +21,7 @@ public class StockDAOImpl implements StockDAO  {
 
     @Override
     public int getAmountAvailable(String stockName) {
-        String sql = "SELECT si.stock_amount FROM stock_initial si WHERE si.stock_name ='" + stockName + "'";
+        String sql = "SELECT si.stock_amount FROM " + MvcConfiguration.databaseSchema + ".stock_initial si WHERE si.stock_name ='" + stockName + "'";
 
         return jdbcTemplate.queryForObject(sql,Integer.class );
     }
@@ -29,10 +30,10 @@ public class StockDAOImpl implements StockDAO  {
     public void updateAmountAvailable(String stockName, int stockAmount, String operationType) {
         String updateSql;
         if(operationType.equals("Buy")){
-            updateSql = "UPDATE stock_initial SET stock_amount=stock_amount - ? WHERE stock_name=?";
+            updateSql = "UPDATE " + MvcConfiguration.databaseSchema + ".stock_initial SET stock_amount=stock_amount - ? WHERE stock_name=?";
         }
         else{
-            updateSql = "UPDATE stock_initial SET stock_amount=stock_amount + ? WHERE stock_name=?";
+            updateSql = "UPDATE " + MvcConfiguration.databaseSchema + ".stock_initial SET stock_amount=stock_amount + ? WHERE stock_name=?";
         }
 
         jdbcTemplate.update(updateSql, stockAmount, stockName);
@@ -40,7 +41,7 @@ public class StockDAOImpl implements StockDAO  {
 
     @Override
     public List<StockItem> getStockList() {
-        String sql = "SELECT company_name, company_code FROM stocks s";
+        String sql = "SELECT company_name, company_code FROM " + MvcConfiguration.databaseSchema + ".stocks s";
         List<StockItem> stockListr = jdbcTemplate.query(sql, new RowMapper<StockItem>() {
 
             @Override
