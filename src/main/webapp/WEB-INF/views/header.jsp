@@ -9,7 +9,7 @@
 		<!-- For login user -->
 		<c:url value="/logout" var="logoutUrl" />
 		<c:url value="/home" var="urlHome" />
-		<c:url value="home/editUser?username=" var="editUser" />
+		<c:url value="/editUser?username=" var="editUser" />
 
         <nav class="headerbar">
         	<div class="container">
