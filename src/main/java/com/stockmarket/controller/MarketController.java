@@ -12,12 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -46,11 +42,13 @@ public class MarketController {
  * Home mapping
  * Automatic redirect from / to /home
  */
+    @CrossOrigin
     @RequestMapping(value="/")
     public String redirect(){
         return "redirect:/home";
     }
 
+    @CrossOrigin
     @RequestMapping(value="/home", method = RequestMethod.GET)
     public ModelAndView marketOverview(ModelAndView model) throws IOException{
 /**
@@ -58,8 +56,8 @@ public class MarketController {
  */
         Wallet wallet = new Wallet();
         User user = new User();
-        user = userDAO.getUser(UserController.setUser());
-        wallet = walletDAO.getWallet(UserController.setUser());
+        user = userDAO.getUser(UserController.getUser());
+        wallet = walletDAO.getWallet(UserController.getUser());
         wallet.setWalletStockList(walletDAO.getWalletItems(wallet.getWalletId()));
 /**
  * JSON data retrieval using JAVA
@@ -103,7 +101,7 @@ public class MarketController {
  */
         Wallet wallet = new Wallet();
         WalletItem walletItem = new WalletItem();
-        wallet = walletDAO.getWallet(UserController.setUser()); //setUser retrieves username from logged in user
+        wallet = walletDAO.getWallet(UserController.getUser()); //getUser retrieves username from logged in user
         walletItem.setWalletItemStockName(stockName);
         walletItem.setWalletItemPrice(stockBuyPrice);
 
@@ -129,7 +127,7 @@ public class MarketController {
         }
         else {
             Wallet wallet = new Wallet();
-            wallet = walletDAO.getWallet(UserController.setUser()); //setUser retrieves username from logged in user
+            wallet = walletDAO.getWallet(UserController.getUser()); //getUser retrieves username from logged in user
             //Updating userwallet_d, userwallet, stock_initial tables
             walletDAO.addItem(walletItem, wallet.getWalletId());
             walletDAO.updateResources(wallet.getWalletId(), wallet.getWalletResource() - (walletItem.getWalletItemAmount()*walletItem.getWalletItemPrice()));
@@ -151,7 +149,7 @@ public class MarketController {
         String stockName = request.getParameter("stockName");
 
         Wallet wallet = new Wallet();
-        wallet = walletDAO.getWallet(UserController.setUser());
+        wallet = walletDAO.getWallet(UserController.getUser());
         //Updating userwallet_d, userwallet, stock_initial tables
         walletDAO.delete(walletItemId);
         walletDAO.updateResources(wallet.getWalletId(), wallet.getWalletResource() + resourceAmount);

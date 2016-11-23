@@ -151,12 +151,12 @@ public class UserController {
         //Loops wallet Items and saves only those which price and amount is not equal to 0
         for (WalletItem walletItem : walletItems) {
             if(walletItem.getWalletItemPrice() != 0 && walletItem.getWalletItemAmount() != 0)
-            walletDAO.addItem(walletItem, walletDAO.getWallet(setUser()).getWalletId());
+            walletDAO.addItem(walletItem, walletDAO.getWallet(getUser()).getWalletId());
         }
         return new ModelAndView("redirect:/");
     }
-     //Retrieves loged user
-    public static String setUser(){
+
+    public static String getUser(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth.getName(); //get logged in username
     }

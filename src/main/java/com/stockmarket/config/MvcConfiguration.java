@@ -8,9 +8,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
@@ -71,6 +69,16 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter{
     @Bean
     public StockDAO getStockDAO() {
         return new StockDAOImpl(getDataSource());
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+//            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/home").allowedOrigins("http://localhost:8080");
+            }
+        };
     }
 
 }
