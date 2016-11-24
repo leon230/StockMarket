@@ -3,7 +3,6 @@ package com.stockmarket.controller;
 import com.stockmarket.dao.StockDAO;
 import com.stockmarket.dao.UserDAO;
 import com.stockmarket.dao.WalletDAO;
-import com.stockmarket.model.User;
 import com.stockmarket.model.Wallet;
 import com.stockmarket.model.WalletItem;
 import com.stockmarket.service.StockService;
@@ -37,6 +36,9 @@ public class MarketController {
     @Autowired
     private WalletItemValidation walletItemValidation;
 
+    private NumberFormat formatter = new DecimalFormat("0000.000");
+    private Wallet wallet = new Wallet();
+
     @InitBinder("StockForm")
     public void initBinder(WebDataBinder binder){
         binder.setValidator(walletItemValidation);
@@ -54,14 +56,7 @@ public class MarketController {
     @CrossOrigin
     @RequestMapping(value="/home", method = RequestMethod.GET)
     public ModelAndView marketOverview(ModelAndView model) throws IOException{
-/**
- * User and Wallet set up.
- */
-        Wallet wallet = new Wallet();
-        User user = new User();
-        user = userDAO.getUser(UserController.getUser());
-        wallet = walletDAO.getWallet(UserController.getUser());
-        wallet.setWalletStockList(walletDAO.getWalletItems(wallet.getWalletId()));
+
 /**
  * JSON data retrieval using JAVA
  * Removed due to AJAX query use. query function in LoadData.js refreshData()
@@ -69,7 +64,7 @@ public class MarketController {
  */
 //        Stock stockJson = new Stock();
 //        try {
-//            String jsonData = ReadFromServer.getJSON();
+//            String jsonData = ReadJSONData.getStockDataJSON();
 //            ObjectMapper mapper = new ObjectMapper();
 //            stockJson = mapper.readValue(jsonData, Stock.class);
 //            model.addObject("connectionErrorMsg",null);
@@ -77,9 +72,10 @@ public class MarketController {
 //        catch (RuntimeException e){
 //            model.addObject("connectionErrorMsg","No connection to stock server...");
 //        }
-        NumberFormat formatter;
-        formatter = new DecimalFormat("0000.000");
-        user.setWallet(wallet);
+
+// Wallet set up.
+        this.wallet = walletDAO.getWallet(UserController.getUser());
+
         model.addObject("walletId",wallet.getWalletId());
         model.addObject("walletResources",formatter.format(wallet.getWalletResource()));
 //        model.addObject("stockJson",stockJson);
@@ -102,7 +98,6 @@ public class MarketController {
 /**
  * Query for user wallet details
  */
-        Wallet wallet = new Wallet();
         WalletItem walletItem = new WalletItem();
         wallet = walletDAO.getWallet(UserController.getUser()); //getUser retrieves username from logged in user
         walletItem.setWalletItemStockName(stockName);
@@ -129,7 +124,6 @@ public class MarketController {
             return model;
         }
         else {
-            Wallet wallet = new Wallet();
             wallet = walletDAO.getWallet(UserController.getUser()); //getUser retrieves username from logged in user
             //Updating userwallet_d, userwallet, stock_initial tables
             walletDAO.addItem(walletItem, wallet.getWalletId());
@@ -152,7 +146,6 @@ public class MarketController {
         double resourceAmount = Double.parseDouble(request.getParameter("resourceAmount"));
         String stockName = request.getParameter("stockName");
 
-        Wallet wallet = new Wallet();
         wallet = walletDAO.getWallet(UserController.getUser());
         //Updating userwallet_d, userwallet, stock_initial tables
         walletDAO.delete(walletItemId);

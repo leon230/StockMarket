@@ -12,9 +12,7 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
-
 import javax.sql.DataSource;
-import java.util.ResourceBundle;
 
 /**
  * Created by lukasz.homik on 2016-11-04.
@@ -29,6 +27,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter{
 
     @Autowired
     private Environment environment;
+
     @Bean
     public ViewResolver getViewResolver(){
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();

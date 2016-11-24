@@ -61,6 +61,7 @@ public class WalletDAOImpl implements WalletDAO {
                 Wallet wallet = new Wallet();
                 wallet.setWalletId(rs.getString("WALLET_ID"));
                 wallet.setWalletResource(rs.getDouble("WALLET_RESOURCE"));
+                wallet.setWalletStockList(getWalletItems(wallet.getWalletId()));
                 return wallet;
             }
         });

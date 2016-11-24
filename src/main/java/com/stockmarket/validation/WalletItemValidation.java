@@ -5,7 +5,7 @@ import com.stockmarket.dao.StockDAO;
 import com.stockmarket.model.Stock;
 import com.stockmarket.model.StockItem;
 import com.stockmarket.model.WalletItem;
-import com.stockmarket.utils.ReadFromServer;
+import com.stockmarket.utils.ReadJSONData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -21,6 +21,7 @@ public class WalletItemValidation implements Validator {
     
     @Autowired
     StockDAO stockDAO;
+    private ObjectMapper mapper = new ObjectMapper();
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -31,8 +32,7 @@ public class WalletItemValidation implements Validator {
         WalletItem walletItem = (WalletItem) target;
 
         Stock stockJson = new Stock();
-        String jsonData = ReadFromServer.getJSON();
-        ObjectMapper mapper = new ObjectMapper();
+        String jsonData = ReadJSONData.getStockDataJSON();
         try {
             stockJson = mapper.readValue(jsonData, Stock.class);
         } catch (IOException e) {
@@ -53,4 +53,3 @@ public class WalletItemValidation implements Validator {
             }
     }
 }
-//TODO add CSS to initial wallet

@@ -13,9 +13,9 @@ import java.net.URL;
  * Method used only to retrieve JSON from the server
  * Not used due to AJAX query. query function in LoadData.js refreshData()
  */
-public class ReadFromServer {
+public class ReadJSONData {
 
-    public static String getJSON() {
+    public static String getStockDataJSON() {
         try {
 
             URL url = new URL("http://webtask.future-processing.com:8068/stocks");
