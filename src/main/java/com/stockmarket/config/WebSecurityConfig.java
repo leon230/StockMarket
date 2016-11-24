@@ -20,8 +20,8 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter{
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("select username,password, enabled from " + MvcConfiguration.databaseSchema + ".users where username=?")
-                .authoritiesByUsernameQuery("select username, role from " + MvcConfiguration.databaseSchema + ".user_roles where username=?");
+                .usersByUsernameQuery("select username,password, enabled from users where username=?")
+                .authoritiesByUsernameQuery("select username, role from user_roles where username=?");
     }
 
     @Override

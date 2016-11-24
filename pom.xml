@@ -18,6 +18,16 @@
         <spring.security.version>4.1.1.RELEASE</spring.security.version>
         <spring.test-mvc.version>1.0.0.M1</spring.test-mvc.version>
         <cglib.version>2.2.2</cglib.version>
+        <javax.servlet>3.1.0</javax.servlet>
+        <javax.servlet.jsp>2.3.1</javax.servlet.jsp>
+        <javax.validation>1.0.0.GA</javax.validation>
+        <jstl>1.2</jstl>
+        <mysql>5.1.6</mysql>
+        <org.hamcrest>1.3</org.hamcrest>
+        <com.fasterxml.jackson.core>2.6.3</com.fasterxml.jackson.core>
+        <maven-compiler-plugin>2.0.2</maven-compiler-plugin>
+        <tomcat7-maven-plugin>2.2</tomcat7-maven-plugin>
+        <maven-war-plugin>2.4</maven-war-plugin>
     </properties>
 
     <dependencies>
@@ -52,31 +62,31 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
+            <version>${javax.servlet}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>javax.servlet.jsp-api</artifactId>
-            <version>2.3.1</version>
+            <version>${javax.servlet.jsp}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
-            <version>1.2</version>
+            <version>${jstl}</version>
         </dependency>
 
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.6</version>
+            <version>${mysql}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
-            <version>1.0.0.GA</version>
+            <version>${javax.validation}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -102,18 +112,18 @@
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
-            <version>1.3</version>
+            <version>${org.hamcrest}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.6.3</version>
+            <version>${com.fasterxml.jackson.core}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.6.3</version>
+            <version>${com.fasterxml.jackson.core}</version>
         </dependency>
     </dependencies>
 
@@ -123,7 +133,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.0.2</version>
+                <version>${maven-compiler-plugin}</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -132,7 +142,7 @@
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
+                <version>${tomcat7-maven-plugin}</version>
                 <configuration>
                     <url>http://localhost:8080/manager/text</url>
                     <server>TomcatServer</server>
@@ -141,7 +151,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.4</version>
+                <version>${maven-war-plugin}</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>

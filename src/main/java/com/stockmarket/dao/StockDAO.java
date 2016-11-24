@@ -8,6 +8,5 @@ import java.util.List;
  */
 public interface StockDAO {
     public int getAmountAvailable(String stockName); //Retrieves amount of stock available from stock_initial table
-    public void updateAmountAvailable(String stockName, int stockAmount, String operationType); //updates stock avaialable amount in stock_initial table
     public List<StockItem> getStockList(); //Retrieves list of stocks for initial wallet values
 }

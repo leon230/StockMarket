@@ -24,16 +24,16 @@ public class UserDAOImpl implements UserDAO{
     public void insertOrUpdate(User user) {
         if (user.getUserId() > 0) {
             // update user table
-            String updateSql = "UPDATE " + MvcConfiguration.databaseSchema + ".users SET PASSWORD=? WHERE USER_ID=?";
+            String updateSql = "UPDATE users SET PASSWORD=? WHERE USER_ID=?";
             jdbcTemplate.update(updateSql, user.getUserPass(), user.getUserId());
 
         } else {
             // insert user table
-            String userSql = "INSERT INTO " + MvcConfiguration.databaseSchema + ".users (USERNAME,PASSWORD)"
+            String userSql = "INSERT INTO users (USERNAME,PASSWORD)"
                     + " VALUES (?, ?)";
             jdbcTemplate.update(userSql, user.getUserName(),user.getUserPass());
             // insert userrole table
-            String roleSql = "INSERT INTO " + MvcConfiguration.databaseSchema + ".user_roles (USERNAME,ROLE)"
+            String roleSql = "INSERT INTO user_roles (USERNAME,ROLE)"
                     + " VALUES (?, ?)";
             jdbcTemplate.update(roleSql, user.getUserName(),user.getUserRole());
         }
@@ -41,7 +41,7 @@ public class UserDAOImpl implements UserDAO{
 
     @Override
     public User getUser(String username){
-        String sql = "SELECT * FROM " + MvcConfiguration.databaseSchema + ".users u WHERE u.username ='" + username + "'";
+        String sql = "SELECT * FROM users u WHERE u.username ='" + username + "'";
 
         return jdbcTemplate.queryForObject(sql,new RowMapper<User>() {
                     public User mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -57,7 +57,7 @@ public class UserDAOImpl implements UserDAO{
     //This function returns only number of rows.
     @Override
     public int findUsername(String username){
-        String sql = "SELECT count(*) FROM " + MvcConfiguration.databaseSchema + ".users u WHERE u.username ='" + username + "'";
+        String sql = "SELECT count(*) FROM users u WHERE u.username ='" + username + "'";
         return jdbcTemplate.queryForObject(sql,Integer.class );
 
     }

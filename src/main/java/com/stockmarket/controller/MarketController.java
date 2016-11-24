@@ -6,6 +6,7 @@ import com.stockmarket.dao.WalletDAO;
 import com.stockmarket.model.User;
 import com.stockmarket.model.Wallet;
 import com.stockmarket.model.WalletItem;
+import com.stockmarket.service.StockService;
 import com.stockmarket.validation.WalletItemValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,11 +29,13 @@ public class MarketController {
     @Autowired
     private UserDAO userDAO;
     @Autowired
-    WalletDAO walletDAO;
+    private WalletDAO walletDAO;
     @Autowired
-    StockDAO stockDAO;
+    private StockDAO stockDAO;
     @Autowired
-    WalletItemValidation walletItemValidation;
+    private StockService stockService;
+    @Autowired
+    private WalletItemValidation walletItemValidation;
 
     @InitBinder("StockForm")
     public void initBinder(WebDataBinder binder){
@@ -131,7 +134,8 @@ public class MarketController {
             //Updating userwallet_d, userwallet, stock_initial tables
             walletDAO.addItem(walletItem, wallet.getWalletId());
             walletDAO.updateResources(wallet.getWalletId(), wallet.getWalletResource() - (walletItem.getWalletItemAmount()*walletItem.getWalletItemPrice()));
-            stockDAO.updateAmountAvailable(walletItem.getWalletItemStockName(), walletItem.getWalletItemAmount(), "Buy");
+            stockService.buyStock(walletItem.getWalletItemStockName(), walletItem.getWalletItemAmount());
+
 
         return new ModelAndView("redirect:/");
         }
@@ -153,7 +157,7 @@ public class MarketController {
         //Updating userwallet_d, userwallet, stock_initial tables
         walletDAO.delete(walletItemId);
         walletDAO.updateResources(wallet.getWalletId(), wallet.getWalletResource() + resourceAmount);
-        stockDAO.updateAmountAvailable(stockName, stockAmount, "Sell");
+        stockService.sellStock(stockName, stockAmount);
         return new ModelAndView("redirect:/");
     }
 }

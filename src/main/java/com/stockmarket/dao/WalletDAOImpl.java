@@ -1,6 +1,5 @@
 package com.stockmarket.dao;
 
-import com.stockmarket.config.MvcConfiguration;
 import com.stockmarket.model.User;
 import com.stockmarket.model.Wallet;
 import com.stockmarket.model.WalletItem;
@@ -24,38 +23,38 @@ public class WalletDAOImpl implements WalletDAO {
     public void insertOrUpdate(Wallet wallet, User user) {
         if (wallet.getWalletId().length() > 0 ) {
             //update
-            String updateSql = "UPDATE " + MvcConfiguration.databaseSchema + ".userwallet SET WALLET_RESOURCE=? WHERE WALLET_ID=?";
+            String updateSql = "UPDATE userwallet SET WALLET_RESOURCE=? WHERE WALLET_ID=?";
             jdbcTemplate.update(updateSql, wallet.getWalletResource(), wallet.getWalletId());
         } else {
             // insert userwallet table
-            String walletSql = "INSERT INTO " + MvcConfiguration.databaseSchema + ".userwallet (WALLET_ID, USER_ID, WALLET_RESOURCE)"
+            String walletSql = "INSERT INTO userwallet (WALLET_ID, USER_ID, WALLET_RESOURCE)"
                     + " VALUES (?, ?, IFNULL(?,0))";
             jdbcTemplate.update(walletSql, "w_" + user.getUserName(), user.getUserName(), wallet.getWalletResource());
         }
     }
     @Override
     public void updateResources(String walletId, double walletResources){
-        String updateSql = "UPDATE " + MvcConfiguration.databaseSchema + ".userwallet SET WALLET_RESOURCE=? WHERE WALLET_ID=?";
+        String updateSql = "UPDATE userwallet SET WALLET_RESOURCE=? WHERE WALLET_ID=?";
         jdbcTemplate.update(updateSql, walletResources, walletId);
     }
     @Override
     public void addItem(WalletItem walletItem, String walletId){
 
-        String itemSql = "INSERT INTO " + MvcConfiguration.databaseSchema + ".userwallet_d (WALLET_ID, STOCK_NAME, STOCK_AMOUNT, UNIT_PRICE)"
+        String itemSql = "INSERT INTO userwallet_d (WALLET_ID, STOCK_NAME, STOCK_AMOUNT, UNIT_PRICE)"
                 + " VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(itemSql, walletId, walletItem.getWalletItemStockName(), walletItem.getWalletItemAmount(), walletItem.getWalletItemPrice());
     }
 
     @Override
     public void delete(int walletItemId) {
-        String sql = "DELETE FROM " + MvcConfiguration.databaseSchema + ".userwallet_d WHERE wallet_item_id=?";
+        String sql = "DELETE FROM userwallet_d WHERE wallet_item_id=?";
         jdbcTemplate.update(sql, walletItemId);
     }
 
     @Override
     public Wallet getWallet(String username) {
 
-        String sql = "SELECT * FROM " + MvcConfiguration.databaseSchema + ".userwallet uw WHERE uw.user_id ='" + username + "'";
+        String sql = "SELECT * FROM userwallet uw WHERE uw.user_id ='" + username + "'";
 
         return jdbcTemplate.queryForObject(sql,new RowMapper<Wallet>() {
             public Wallet mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -69,8 +68,7 @@ public class WalletDAOImpl implements WalletDAO {
     @Override
     public List<WalletItem> getWalletItems(String walletId){
         String sql = "SELECT uw.wallet_id, uwd.wallet_item_id, uwd.stock_name, uwd.stock_amount, uwd.unit_price, " +
-                "uwd.stock_amount * uwd.unit_price AS ITEM_VALUE FROM " + MvcConfiguration.databaseSchema + ".userwallet uw, "
-                + MvcConfiguration.databaseSchema + ".userwallet_d uwd " +
+                "uwd.stock_amount * uwd.unit_price AS ITEM_VALUE FROM userwallet uw, userwallet_d uwd " +
                 "WHERE uw.wallet_id = uwd.wallet_id " +
                 "AND uw.wallet_id ='" + walletId + "'";
         List<WalletItem> itemList = jdbcTemplate.query(sql, new RowMapper<WalletItem>() {

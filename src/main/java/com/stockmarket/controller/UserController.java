@@ -20,22 +20,23 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Locale;
+import java.util.ResourceBundle;
 /**
  * Created by lukasz.homik on 2016-11-04.
  */
 @Controller
-public class UserController {
+class UserController {
 
     @Autowired
     private UserDAO userDAO;
     @Autowired
-    WalletDAO walletDAO;
+    private WalletDAO walletDAO;
     @Autowired
-    StockDAO stockDAO;
+    private StockDAO stockDAO;
     @Autowired
-    UserValidation userValidation;
-
+    private UserValidation userValidation;
+    private ResourceBundle bunlde = ResourceBundle.getBundle("messages");
 
     @InitBinder("UserForm")
     public void initBinder(WebDataBinder binder){
@@ -50,10 +51,10 @@ public class UserController {
 
         ModelAndView model = new ModelAndView();
         if (error != null) {
-            model.addObject("error", "Invalid username and password!");
+            model.addObject("error", bunlde.getString("User.login.incorrect"));
         }
         if (logout != null) {
-            model.addObject("msg", "You've been logged out successfully.");
+            model.addObject("msg", bunlde.getString("User.logout"));
         }
         model.setViewName("login");
 
@@ -80,7 +81,7 @@ public class UserController {
      */
     @RequestMapping(value = "**/saveUser", method = RequestMethod.POST)
     public ModelAndView CheckForm(@ModelAttribute("UserForm") @Validated User user, BindingResult result
-            , ModelAndView model,HttpServletRequest request) {
+            , ModelAndView model) {
         if (result.hasErrors()) {
             model.setViewName("UserForm");
             return model;
@@ -124,13 +125,12 @@ public class UserController {
 
         List<WalletItem> walletItemList = new ArrayList<>();
         //Getting stock list from stocks table and populate data in walletStockList
-        for (StockItem stockItem: stockDAO.getStockList()
-             ) {
-                WalletItem walletItem = new WalletItem();
-                walletItem.setWalletItemAmount(0);
-                walletItem.setWalletItemPrice(0);
-                walletItem.setWalletItemStockName(stockItem.getName());
-                walletItemList.add(walletItem);
+        for (StockItem stockItem: stockDAO.getStockList()) {
+            WalletItem walletItem = new WalletItem();
+            walletItem.setWalletItemAmount(0);
+            walletItem.setWalletItemPrice(0);
+            walletItem.setWalletItemStockName(stockItem.getName());
+            walletItemList.add(walletItem);
         }
 
         wallet.setWalletStockList(walletItemList);
