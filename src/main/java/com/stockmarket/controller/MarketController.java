@@ -130,7 +130,6 @@ public class MarketController {
             walletDAO.updateResources(wallet.getWalletId(), wallet.getWalletResource() - (walletItem.getWalletItemAmount()*walletItem.getWalletItemPrice()));
             stockService.buyStock(walletItem.getWalletItemStockName(), walletItem.getWalletItemAmount());
 
-
         return new ModelAndView("redirect:/");
         }
     }
