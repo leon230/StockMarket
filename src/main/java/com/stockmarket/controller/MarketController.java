@@ -98,12 +98,12 @@ public class MarketController {
 /**
  * Query for user wallet details
  */
+
         WalletItem walletItem = new WalletItem();
-        wallet = walletDAO.getWallet(UserController.getUser()); //getUser retrieves username from logged in user
         walletItem.setWalletItemStockName(stockName);
         walletItem.setWalletItemPrice(stockBuyPrice);
+        wallet = walletDAO.getWallet(UserController.getUser()); //getUser retrieves username from logged in user
 
-        model.addObject("walletId", wallet.getWalletId());
         model.addObject("walletResources", wallet.getWalletResource());
         model.addObject("StockForm", walletItem);
         model.addObject("stockUnit", stockUnit);
@@ -125,10 +125,8 @@ public class MarketController {
         }
         else {
             wallet = walletDAO.getWallet(UserController.getUser()); //getUser retrieves username from logged in user
-            //Updating userwallet_d, userwallet, stock_initial tables
-            walletDAO.addItem(walletItem, wallet.getWalletId());
-            walletDAO.updateResources(wallet.getWalletId(), wallet.getWalletResource() - (walletItem.getWalletItemAmount()*walletItem.getWalletItemPrice()));
-            stockService.buyStock(walletItem.getWalletItemStockName(), walletItem.getWalletItemAmount());
+
+            stockService.buyStock(walletItem, wallet);
 
         return new ModelAndView("redirect:/");
         }
