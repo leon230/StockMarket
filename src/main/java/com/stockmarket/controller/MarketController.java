@@ -43,6 +43,12 @@ public class MarketController {
     public void initBinder(WebDataBinder binder){
         binder.setValidator(walletItemValidation);
     }
+
+    @InitBinder
+    public void initWallet(){
+        this.wallet = walletDAO.getWallet(UserController.getUser()); //init Wallet set up
+    }
+
 /**
  * Home mapping
  * Automatic redirect from / to /home
@@ -73,9 +79,6 @@ public class MarketController {
 //            model.addObject("connectionErrorMsg","No connection to stock server...");
 //        }
 
-// Wallet set up.
-        this.wallet = walletDAO.getWallet(UserController.getUser());
-
         model.addObject("walletId",wallet.getWalletId());
         model.addObject("walletResources",formatter.format(wallet.getWalletResource()));
 //        model.addObject("stockJson",stockJson);
@@ -102,7 +105,6 @@ public class MarketController {
         WalletItem walletItem = new WalletItem();
         walletItem.setWalletItemStockName(stockName);
         walletItem.setWalletItemPrice(stockBuyPrice);
-        wallet = walletDAO.getWallet(UserController.getUser()); //getUser retrieves username from logged in user
 
         model.addObject("walletResources", wallet.getWalletResource());
         model.addObject("StockForm", walletItem);
@@ -116,7 +118,7 @@ public class MarketController {
  *  Mapping when user confirms to buy a stock from StockForm
  */
     @RequestMapping(value = "**/addStock", method = RequestMethod.POST)
-    public ModelAndView addStock(HttpServletRequest request, @ModelAttribute("StockForm") @Validated WalletItem walletItem, BindingResult result
+    public ModelAndView addStock(@ModelAttribute("StockForm") @Validated WalletItem walletItem, BindingResult result
             , ModelAndView model) {
         if (result.hasErrors()) {
             model.addObject("stockAmount", stockDAO.getAmountAvailable(walletItem.getWalletItemStockName())); //refreshes stock amount available
@@ -124,10 +126,7 @@ public class MarketController {
             return model;
         }
         else {
-            wallet = walletDAO.getWallet(UserController.getUser()); //getUser retrieves username from logged in user
-
             stockService.buyStock(walletItem, wallet);
-
         return new ModelAndView("redirect:/");
         }
     }
@@ -143,11 +142,7 @@ public class MarketController {
         double resourceAmount = Double.parseDouble(request.getParameter("resourceAmount"));
         String stockName = request.getParameter("stockName");
 
-        wallet = walletDAO.getWallet(UserController.getUser());
-        //Updating userwallet_d, userwallet, stock_initial tables
-        walletDAO.delete(walletItemId);
-        walletDAO.updateResources(wallet.getWalletId(), wallet.getWalletResource() + resourceAmount);
-        stockService.sellStock(stockName, stockAmount);
+        stockService.sellStock(stockName, stockAmount, walletItemId, wallet, resourceAmount);
         return new ModelAndView("redirect:/");
     }
 }

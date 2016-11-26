@@ -32,7 +32,10 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public void sellStock(String stockName, int stockAmount) {
+    public void sellStock(String stockName, int stockAmount, int walletItemId, Wallet wallet, double resourceAmount) {
+
+        walletDAO.delete(walletItemId);
+        walletDAO.updateResources(wallet.getWalletId(), wallet.getWalletResource() + resourceAmount);
         String updateSql = "UPDATE stock_initial SET stock_amount=stock_amount + ? WHERE stock_name=?";
         jdbcTemplate.update(updateSql, stockAmount, stockName);
     }

@@ -8,5 +8,5 @@ import com.stockmarket.model.WalletItem;
  */
 public interface StockService {
     public void buyStock(WalletItem walletItem, Wallet wallet);
-    public void sellStock(String stockName, int stockAmount);
+    public void sellStock(String stockName, int stockAmount, int walletItemId, Wallet wallet, double resourceAmount);
 }
