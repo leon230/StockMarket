@@ -1,6 +1,5 @@
 package com.stockmarket.dao;
 
-import com.stockmarket.config.MvcConfiguration;
 import com.stockmarket.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
