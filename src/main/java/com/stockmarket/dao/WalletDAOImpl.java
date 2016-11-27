@@ -93,4 +93,38 @@ public class WalletDAOImpl implements WalletDAO {
 
 
     }
+
+
+    public void put(K newKey, V data){
+        if(newKey==null)
+            return;    //does not allow to store null.
+
+        int hash=hash(newKey);
+        Entry<K,V> newEntry = new Entry<K,V>(newKey, data, null);
+
+        if(table[hash] == null){
+            table[hash] = newEntry;
+        }else{
+            Entry<K,V> previous = null;
+            Entry<K,V> current = table[hash];
+
+            while(current != null){ //we have reached last entry of bucket.
+                if(current.key.equals(newKey)){
+                    if(previous==null){  //node has to be insert on first of bucket.
+                        newEntry.next=current.next;
+                        table[hash]=newEntry;
+                        return;
+                    }
+                    else{
+                        newEntry.next=current.next;
+                        previous.next=newEntry;
+                        return;
+                    }
+                }
+                previous=current;
+                current = current.next;
+            }
+            previous.next = newEntry;
+        }
+    }
 }

@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -23,6 +25,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebMvc
+@EnableTransactionManagement
 @ComponentScan(basePackages="com.stockmarket")
 @Import({ WebSecurityConfig.class })
 @PropertySource(value = "classpath:messages.properties")
@@ -75,7 +78,10 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter{
     }
     @Bean
     public StockService stockService() {return new StockServiceImpl(getDataSource());}
-
+    @Bean
+    public DataSourceTransactionManager txManager() {
+        return new DataSourceTransactionManager(getDataSource());
+    }
 //    @Bean
 //    public WebMvcConfigurer corsConfigurer() {
 //        return new WebMvcConfigurerAdapter() {

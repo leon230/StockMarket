@@ -36,7 +36,7 @@ public class WalletItemValidation implements Validator {
         try {
             stockJson = mapper.readValue(jsonData, Stock.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            errors.reject("CantGetJson.StockForm.getJsonError");
         }
 
         if(walletItem.getWalletItemAmount() > stockDAO.getAmountAvailable(walletItem.getWalletItemStockName())){
@@ -49,7 +49,6 @@ public class WalletItemValidation implements Validator {
                                 errors.rejectValue("walletItemPrice", "IncorrectPrice.StockForm.walletItemPrice");
                             }
                         }
-                
             }
     }
 }

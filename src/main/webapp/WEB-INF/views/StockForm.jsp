@@ -23,7 +23,7 @@
 	<div class="container">
         <h1>Stock details</h1>
             <form:form name="StockForm" action="addStock?walletId=${walletId}" method="post" modelAttribute="StockForm" onsubmit="return validateStockForm()">
-
+                <form:errors path="*" class="errorblock" element="div"/>
                 <spring:bind path="walletItemStockName">
                     <div class="form-group">
                         <label class="col-sm-10 control-label">Stock name</label>
@@ -74,8 +74,6 @@
                     </div>
                 </div>
                 </spring:bind>
-
-
 
             <div class="form-group">
                 <div class="col-sm-10">

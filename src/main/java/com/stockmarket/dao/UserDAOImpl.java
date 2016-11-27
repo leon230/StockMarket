@@ -3,6 +3,7 @@ package com.stockmarket.dao;
 import com.stockmarket.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.transaction.annotation.Transactional;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,6 +21,7 @@ public class UserDAOImpl implements UserDAO{
      * UserId is hidden in the template. It is used to recognize insert or update  action
      */
     @Override
+    @Transactional
     public void insertOrUpdate(User user) {
         if (user.getUserId() > 0) {
             // update user table

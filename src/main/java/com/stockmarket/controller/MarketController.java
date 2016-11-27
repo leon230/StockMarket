@@ -1,7 +1,6 @@
 package com.stockmarket.controller;
 
 import com.stockmarket.dao.StockDAO;
-import com.stockmarket.dao.UserDAO;
 import com.stockmarket.dao.WalletDAO;
 import com.stockmarket.model.Wallet;
 import com.stockmarket.model.WalletItem;
@@ -14,7 +13,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -26,8 +24,6 @@ import java.text.NumberFormat;
 @Controller
 public class MarketController {
 
-    @Autowired
-    private UserDAO userDAO;
     @Autowired
     private WalletDAO walletDAO;
     @Autowired
@@ -54,13 +50,11 @@ public class MarketController {
  * Home mapping
  * Automatic redirect from / to /home
  */
-    @CrossOrigin
     @RequestMapping(value="/")
     public String redirect(){
         return "redirect:/home";
     }
 
-    @CrossOrigin
     @RequestMapping(value="/home", method = RequestMethod.GET)
     public ModelAndView marketOverview(ModelAndView model) throws IOException{
 
