@@ -27,8 +27,6 @@ public class MarketController {
     @Autowired
     private WalletDAO walletDAO;
     @Autowired
-    private StockDAO stockDAO;
-    @Autowired
     private StockService stockService;
     @Autowired
     private WalletItemValidation walletItemValidation;
@@ -104,7 +102,7 @@ public class MarketController {
         model.addObject("walletResources", wallet.getWalletResource());
         model.addObject("StockForm", walletItem);
         model.addObject("stockUnit", stockUnit);
-        model.addObject("stockAmount", stockDAO.getAmountAvailable(stockName));
+        model.addObject("stockAmount", stockService.getStockAmount(stockName));
         model.setViewName("StockForm");
 
         return model;
@@ -116,7 +114,7 @@ public class MarketController {
     public ModelAndView addStock(@ModelAttribute("StockForm") @Validated WalletItem walletItem, BindingResult result
             , ModelAndView model) {
         if (result.hasErrors()) {
-            model.addObject("stockAmount", stockDAO.getAmountAvailable(walletItem.getWalletItemStockName())); //refreshes stock amount available
+            model.addObject("stockAmount", stockService.getStockAmount(walletItem.getWalletItemStockName())); //refreshes stock amount available
             model.setViewName("StockForm");
             return model;
         }
