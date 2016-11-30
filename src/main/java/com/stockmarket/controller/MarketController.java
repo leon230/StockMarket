@@ -1,18 +1,21 @@
 package com.stockmarket.controller;
 
-import com.stockmarket.dao.StockDAO;
-import com.stockmarket.dao.WalletDAO;
 import com.stockmarket.model.Wallet;
 import com.stockmarket.model.WalletItem;
 import com.stockmarket.service.StockService;
+import com.stockmarket.service.WalletService;
 import com.stockmarket.validation.WalletItemValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -25,7 +28,7 @@ import java.text.NumberFormat;
 public class MarketController {
 
     @Autowired
-    private WalletDAO walletDAO;
+    private WalletService walletService;
     @Autowired
     private StockService stockService;
     @Autowired
@@ -41,7 +44,7 @@ public class MarketController {
 
     @InitBinder
     public void initWallet(){
-        this.wallet = walletDAO.getWallet(UserController.getUser()); //init Wallet set up
+        this.wallet = walletService.getWallet(UserController.getUser()); //init Wallet set up
     }
 
 /**
@@ -94,13 +97,8 @@ public class MarketController {
 /**
  * Query for user wallet details
  */
-
-        WalletItem walletItem = new WalletItem();
-        walletItem.setWalletItemStockName(stockName);
-        walletItem.setWalletItemPrice(stockBuyPrice);
-
         model.addObject("walletResources", wallet.getWalletResource());
-        model.addObject("StockForm", walletItem);
+        model.addObject("StockForm", walletService.createWalletItem(stockName, stockBuyPrice));
         model.addObject("stockUnit", stockUnit);
         model.addObject("stockAmount", stockService.getStockAmount(stockName));
         model.setViewName("StockForm");
